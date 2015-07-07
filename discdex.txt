@@ -1,13 +1,13 @@
-fileName	discName	fileSize
-aaa.mp3	sdfg	0
-bbb.mp3	sdfg	0
-hidden.mp3	sdfg	0
-hidden.avi	sdfg	0
-discdex.txt	sdfg	66
-fdshfd.txt	sdfg	0
-aaa.mp3	jhgk	0
-bbb.mp3	jhgk	0
-hidden.mp3	jhgk	0
-hidden.avi	jhgk	0
-discdex.txt	jhgk	196
-fdshfd.txt	jhgk	0
+
+aaa.mp3	fjh	0
+bbb.mp3	fjh	0
+hidden.mp3	fjh	0
+hidden.avi	fjh	0
+discdex.txt	fjh	62
+fdshfd.txt	fjh	0
+aaa.mp3	sagfd	0	mp3
+bbb.mp3	sagfd	0	mp3
+hidden.mp3	sagfd	0	mp3
+hidden.avi	sagfd	0	avi
+discdex.txt	sagfd	184	txt
+fdshfd.txt	sagfd	0	txt

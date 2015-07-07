@@ -43,7 +43,6 @@ return:
 """
 def walkIt(path, filetype):
 
-    globlisting = path + '/*/*.' + filetype
     results = []
     
     for root, dirnames, filenames in os.walk(path):
@@ -61,17 +60,21 @@ Create string of file stats append to list.
 
 parameters:
     results: list. All the files found.
+    currentFiletype: string. The current filetype being listed.
     
 return:
     entries: list. All the files with their stats as string.
 """
-def entryIt(results):
+def entryIt(results, currentFiletype):
     entries = []
 
     for result in results:
-        #print ('\t', result)
         print ('\t' + os.path.basename(result))
-        entries.append('\n' + os.path.basename(result) + '\t' + sourceName  + '\t' + str(os.path.getsize(result)))
+        entries.append('\n' 
+            + os.path.basename(result) + '\t' 
+            + sourceName  + '\t' 
+            + str(os.path.getsize(result)) + '\t'
+            + currentFiletype)
 
     return entries
 
@@ -91,7 +94,7 @@ print ("Listing files and folders under: " + path + " and writing to indexing fi
 
 for filetype in filetypes.split(" "):
     results = walkIt(path, filetype)
-    entries = entryIt(results)
+    entries = entryIt(results, filetype)
 
     ticker = ticker + len(entries)
 
