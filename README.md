@@ -4,12 +4,12 @@ Indexing for CD/DVD/HDD
 ### Discdex versions
 v0.0.1 (current)
 
-(Note to author: version specified in package.json, readme.md, changelog.md, lib/config.js and git.)
+(Note to author: version specified in readme.md, changelog.md, and git.)
 
 
 ### Requirements
 Python 3.4
--NIX based system (MS-Windows path using backslash needs to be escaped in the code to work).
+A NIX based system ( This is due to the fact that MS-Windows path using backslash needs to be escaped in the code to work).
 
 
 ### Overview
@@ -26,15 +26,28 @@ Enter path to disc to be indexed. Next enter a name/label of your choice for ref
 ### Current Features:
 General functinality:
 
+* Walks a directory (recursive) and its subdirectories and records all files found that match the fileType criteria.
+
 Specs and options:
 
+* Easy file type parameters.
 
 ### Known Issues/Missing Features:
 Functionality:
 
+* Needs to check the supplied path for validity.
+
 Specs and options:
 
-* Logfile should have possiblity to be written to database.
+* A choice of the file meta data to include in the indexing system.
+	- Name
+	- Location disc name
+	- Size
+	- Codec
+	- Bitrate
+	- Date modified
+	- Alternate file name
+	- 
 
 Security:
 
