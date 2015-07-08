@@ -47,11 +47,10 @@ Specs and options:
 	- Bitrate
 	- Date modified
 	- Alternate file name
-	- 
 
-Security:
+Security: none
 
-Code, style and performance:
+Code, style and performance: none
 
 
 
