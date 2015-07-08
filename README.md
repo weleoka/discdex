@@ -1,11 +1,12 @@
-Indexing for CD/DVD/HDD or other.
+Indexing of files for CD/DVD/HDD or other.
 
 
 
 ### Discdex versions
-v0.0.1 (current)
+v0.0.2 (current)
 
 (Note to author: version specified in readme.md, changelog.md, and git.)
+
 
 
 ### Requirements
@@ -14,17 +15,28 @@ Python 3.4
 A NIX based system ( This is due to the fact that MS-Windows path using backslash needs to be escaped in the code to work).
 
 
-### Overview
-A simple tool to create a log of all files and folders on a removable media device such as a CD or BLU-Ray. The log appends an arbitary name to all files/folders which specifies which removable media entity it can be found on.
 
-Discdex aims to collect metadata on all, or choice, data stored on removable storage devices. The metadata can then be put to use for organising, be searched through and ultimately data can be kept track of more easily.
+### Overview
+A simple tool to create a log of all files and folders on a removable media device such as a CD or BLU-Ray. This indexer can append a user supplied arbitary name to all files/folders which specifies which removable media entity it can be found on.
+
+Discdex aims to collect metadata on all, or choice, data stored on removable storage devices. The metadata can then be put to use for organising and easily be searched through. Ultimately data can be kept track of more easily with discdex.
+
 
 
 ### Installation
+1. Git clone or download archive and extract. 
+2. Make discdex.py executable
+3. Run as bash script "./discdex.py"
+
 
 
 ### Usage
-Enter path to disc to be indexed. Next enter a name/label of your choice for referencing that particular disc. 
+Pre-launch: make sure the filetypes you want to index are specified in the config-part discdex.py.
+
+1. Enter path to disc to be indexed at prompt. 
+2. Enter a name/label of your choice for referencing that particular disc. 
+3. Let the work be done by discdex!
+
 
 
 ### Current Features:
@@ -39,11 +51,11 @@ General functinality:
 	- Size
 	- Date modified
 
-
-
 Specs and options:
 
-* Easy file type parameters.
+* Easy file type parameters in config.
+
+
 
 ### Known Issues/Missing Features:
 Functionality:
@@ -68,6 +80,7 @@ Code, style and performance: none
 Please report an issue if one is found.
 
 
+
 ### Contributing
 If you'd like to contribute to Discdex's development, start by forking the GitHub repo:
 
@@ -90,6 +103,7 @@ The best way to get your changes merged is as follows:
 LICENCE.md for details.
 
 Copyright (c) 2015 A.K. Weeks
+
 
 
 ### Sources, inspiration and notes
