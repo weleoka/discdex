@@ -71,6 +71,7 @@ Functionality:
 Specs and options:
 
 * A choice of the file metadata to include in the indexing system.
+* Wildcard "*" to index all file endings currently not working.
 
 Security: none
 

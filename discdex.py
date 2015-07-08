@@ -17,16 +17,16 @@ Append to indexing file.
 The open() function is used with the "a" for append argument.
 
 parameters:
-    batch: An batch of entries to append to the file
-    destination: the file to append the information to.
+    entry: An entry with file metadata to append to the indexing file
+    destination: the indexing file to append the information to.
 
 return:
     void
 """
-def append_to_index_file(batch, destination):
+def append_to_index_file(entry, destination):
 
     with open(destination, "a") as myfile:
-        myfile.write(batch)
+        myfile.write(entry)
         myfile.close()
 
 
@@ -35,17 +35,17 @@ def append_to_index_file(batch, destination):
 Walk the device's directory tree and add files matching the criteria to list.
 
 parameters:
-    path: string. Root path to work from.
+    path_to_device: string. Root path to work from.
     filetype: string. The file types to list.
     
 return:
-    list
+    results: list. The list of all files of specific filetype found.
 """
-def walk_device(path, filetype):
+def walk_device(path_to_device, filetype):
 
     results = []
     
-    for root, dirnames, filenames in os.walk(path):
+    for root, dirnames, filenames in os.walk(path_to_device):
         for filename in fnmatch.filter(filenames, '*.' + filetype):
             results.append(os.path.join(root, filename))
 
@@ -69,35 +69,45 @@ Data should include:
 
 parameters:
     results: list. All the files found with relevan metadata.
-    currentFiletype: string. The current filetype being listed.
-    pathToDevice: string. The path to the currently indexed storage device.
+    current_file_type: string. The current filetype being listed.
+    path_to_device: string. The path to the currently indexed storage device.
+    device_name: string. The user supplied name for the device.
     
 return:
     entries: list. All the files with their stats as string.
 """
-def create_indexing_entry(results, currentFiletype, pathToDevice):
+def create_indexing_entry(results, current_file_type, path_to_device, device_name):
     entries = []
 
     for result in results:
-        name = re.split('.' + currentFiletype, os.path.basename(result))[0]
-        pathAndNameToFile = re.split(pathToDevice, result)[1]
+        
+        if current_file_type != '*':
+            file_type = current_file_type
+        else:
+            #Currently this refuses to split on a full stop.
+            file_type = re.split(".", os.path.basename(result))[-1]
 
+        # print("File type is %s" % (file_type))
+        name = re.split('.' + file_type, os.path.basename(result))[0]
+
+        path_and_name_to_file = re.split(path_to_device, result)[1]
+        
         try:
-            pathToFile = re.split(name, pathAndNameToFile)[0]
+            path_to_file = re.split(name, path_and_name_to_file)[0]
         except:
-            pathToFile = 'ERROR: bad character range'
+            path_to_file = 'ERROR: bad character range'
             print ("\n Problem with name of file: %s " 
-                % (pathAndNameToFile))
+                % (path_and_name_to_file))
             pass
 
         #print ('\t' + name)
         
         entries.append('\n'
-            + pathToDevice + '\t' 
-            + sourceName  + '\t'                    # Device name
-            + pathToFile + '\t'                     # Path to file
+            + path_to_device + '\t'                 # System path to device
+            + device_name  + '\t'                   # Device name
+            + path_to_file + '\t'                   # Path to file
             + name + '\t'                           # Name of file
-            + currentFiletype + '\t'                # File type
+            + file_type + '\t'                      # File type
             + str(os.path.getmtime(result)) + '\t'  # Date modified
             + str(os.path.getsize(result)) + '\t'   # Size
             )
@@ -114,21 +124,21 @@ if __name__ == '__main__': # simultaneously importable module and executable scr
 
     ticker = 0  # Keep count of the total files found matching the filetype criteria.
 
-    path = input('Path to disc (ex. /media/simoni/superCD ): ')
-    # path = "/home/deppi/python/discdex" # Un-comment to have a fixed path location to work from.
-    sourceName = input('Your name for the device (ex. disc_01): ')
+    path_to_device = input('Path to disc (ex. /media/simoni/superCD ): ')
+    #path_to_device = "/home/deppi/python/discdex" # Un-comment to have a fixed path location to work from.
+    device_name = input('Your name for the device (ex. disc_01): ')
 
     print ("Listing files and folders under: %s and writing to indexing file..." 
-        % (path))
+        % (path_to_device))
 
     for filetype in FILETYPES.split(" "):
-        results = walk_device(path, filetype)
-        entries = create_indexing_entry(results, filetype, path)
+        results = walk_device(path_to_device, filetype)
+        entries = create_indexing_entry(results, filetype, path_to_device, device_name)
 
         ticker = ticker + len(entries)
 
         for entry in entries:
-            append_to_index(entry, OUTPUTFILE)
+            append_to_index_file(entry, OUTPUTFILE)
 
 
     print ("Total %i files written to %s"
