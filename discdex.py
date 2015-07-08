@@ -114,9 +114,9 @@ if __name__ == '__main__': # simultaneously importable module and executable scr
 
     ticker = 0  # Keep count of the total files found matching the filetype criteria.
 
-    path = "/home/deppi/python/discdex" 
-    #path = input('Path to disc (ex. /media/bizles/SMALLBITS ): ')
-    sourceName = input('Your name for the disc (ex. disc_01): ')
+    path = input('Path to disc (ex. /media/simoni/superCD ): ')
+    # path = "/home/deppi/python/discdex" # Un-comment to have a fixed path location to work from.
+    sourceName = input('Your name for the device (ex. disc_01): ')
 
     print ("Listing files and folders under: %s and writing to indexing file..." 
         % (path))
