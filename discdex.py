@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import os, fnmatch
+import re, os, fnmatch
 
 
 
@@ -32,7 +32,7 @@ def discdexIt(batch, destination):
 
 
 """
-Walk the directory tree and log add files found to list.
+Walk the directory tree and add the files found to a list.
 
 parameters:
     path: string. Root path to work from.
@@ -56,29 +56,44 @@ def walkIt(path, filetype):
 
 
 """
-Create string of file stats append to list.
+Create string of file metadata and append to list.
+Data should include:    
+    - Location device name (supplied by user)
+    - Path to file
+    - Name of file
+    - File type
+    - Date modified
+    - Size
 
 parameters:
-    results: list. All the files found.
+    results: list. All the files found with relevan metadata.
     currentFiletype: string. The current filetype being listed.
+    pathToDevice: string. The path to the currently indexed storage device.
     
 return:
     entries: list. All the files with their stats as string.
 """
-def entryIt(results, currentFiletype):
+def entryIt(results, currentFiletype, pathToDevice):
     entries = []
 
     for result in results:
-        print ('\t' + os.path.basename(result))
-        entries.append('\n' 
-            + os.path.basename(result) + '\t' 
-            + sourceName  + '\t' 
-            + str(os.path.getsize(result)) + '\t'
-            + currentFiletype)
-
+        name = re.split('.' + currentFiletype, os.path.basename(result))[0]
+        pathAndNameToFile = re.split(pathToDevice, result)[1]
+        pathToFile = re.split(name, pathAndNameToFile)[0]
+        
+        print ('\t' + name)
+        
+        entries.append('\n'    
+            + sourceName  + '\t'                    # Device name
+            + pathToFile + '\t'                     # Path to file
+            + name + '\t'                           # Name of file
+            + currentFiletype + '\t'                # File type
+            + str(os.path.getmtime(result)) + '\t'  # Date modified
+            + str(os.path.getsize(result)) + '\t'   # Size
+            )
     return entries
 
-
+# print datetime.fromtimestamp(os.path.getmtime(result)).strftime("%d%b%Y %H:%M:%S")
 
 
 """
@@ -86,7 +101,7 @@ MAIN
 """
 ticker = 0
 
-path = "/home/bizles/python/discdex/" 
+path = "/home/deppi/python/discdex" 
 #path = input('Path to disc (ex. /media/bizles/SMALLBITS): ')
 sourceName = input('Name of disc (ex. disc_01): ')
 
@@ -94,7 +109,7 @@ print ("Listing files and folders under: " + path + " and writing to indexing fi
 
 for filetype in filetypes.split(" "):
     results = walkIt(path, filetype)
-    entries = entryIt(results, filetype)
+    entries = entryIt(results, filetype, path)
 
     ticker = ticker + len(entries)
 

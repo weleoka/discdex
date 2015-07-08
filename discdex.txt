@@ -1,13 +1,25 @@
 
-aaa.mp3	fjh	0
-bbb.mp3	fjh	0
-hidden.mp3	fjh	0
-hidden.avi	fjh	0
-discdex.txt	fjh	62
-fdshfd.txt	fjh	0
-aaa.mp3	sagfd	0	mp3
-bbb.mp3	sagfd	0	mp3
-hidden.mp3	sagfd	0	mp3
-hidden.avi	sagfd	0	avi
-discdex.txt	sagfd	184	txt
-fdshfd.txt	sagfd	0	txt
+disc01	/	aaa.mp3	0	mp3	1436334521.3719027	
+disc01	/	bbb.mp3	0	mp3	1436334521.3719027	
+disc01	/Folder02/	hidden.mp3	0	mp3	1436334521.3679028	
+disc01	/Folder02/	hidden.avi	0	avi	1436334521.3679028	
+disc01	/	discdex.txt	196	txt	1436348968.7848496	
+disc01	/Folder02/	fdshfd.txt	0	txt	1436334521.3679028	
+asdf	/	aaa.	mp3	1436334521.3719027	0	
+asdf	/	bbb.	mp3	1436334521.3719027	0	
+asdf	/Folder02/	hidden.	mp3	1436334521.3679028	0	
+asdf	/Folder02/	hidden.	avi	1436334521.3679028	0	
+asdf	/	discdex.	txt	1436349227.5952234	476	
+asdf	/Folder02/	fdshfd.	txt	1436334521.3679028	0	
+asda		.aaa.	mp3	1436334521.3719027	0	
+asda		.bbb.	mp3	1436334521.3719027	0	
+asda	/Folder02	.hidden.	mp3	1436334521.3679028	0	
+asda	/Folder02	.hidden.	avi	1436334521.3679028	0	
+asda		.discdex.	txt	1436349249.1870797	746	
+asda	/Folder02	.fdshfd.	txt	1436334521.3679028	0	
+asdf	/	aaa	mp3	1436334521.3719027	0	
+asdf	/	bbb	mp3	1436334521.3719027	0	
+asdf	/Folder02/	hidden	mp3	1436334521.3679028	0	
+asdf	/Folder02/	hidden	avi	1436334521.3679028	0	
+asdf	/	discdex	txt	1436349272.262925	1012	
+asdf	/Folder02/	fdshfd	txt	1436334521.3679028	0	

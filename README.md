@@ -1,4 +1,5 @@
-Indexing for CD/DVD/HDD
+Indexing for CD/DVD/HDD or other.
+
 
 
 ### Discdex versions
@@ -9,11 +10,14 @@ v0.0.1 (current)
 
 ### Requirements
 Python 3.4
+
 A NIX based system ( This is due to the fact that MS-Windows path using backslash needs to be escaped in the code to work).
 
 
 ### Overview
-A simple tool to create a log of all files and folders on a media device such as a CD or BLU-Ray. The log appends an arbitary name to all files/folders which specifies which CD/BR it can be found on.
+A simple tool to create a log of all files and folders on a removable media device such as a CD or BLU-Ray. The log appends an arbitary name to all files/folders which specifies which removable media entity it can be found on.
+
+Discdex aims to collect metadata on all, or choice, data stored on removable storage devices. The metadata can then be put to use for organising, be searched through and ultimately data can be kept track of more easily.
 
 
 ### Installation
@@ -27,6 +31,15 @@ Enter path to disc to be indexed. Next enter a name/label of your choice for ref
 General functinality:
 
 * Walks a directory (recursive) and its subdirectories and records all files found that match the fileType criteria.
+* Saves information on
+	- Name
+	- File type
+	- Location disc name
+	- Full path to file
+	- Size
+	- Date modified
+
+
 
 Specs and options:
 
@@ -36,17 +49,14 @@ Specs and options:
 Functionality:
 
 * Needs to check the supplied path for validity.
+* Missing feature to extract metadata from multimedia files. Needs to import module like Hachoir which can read metadata of various files. Interesting data could be:
+	- Duration
+	- Encoding/codec
+	- Bitrate
 
 Specs and options:
 
-* A choice of the file meta data to include in the indexing system.
-	- Name
-	- Location disc name
-	- Size
-	- Codec
-	- Bitrate
-	- Date modified
-	- Alternate file name
+* A choice of the file metadata to include in the indexing system.
 
 Security: none
 
