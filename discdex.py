@@ -7,8 +7,8 @@ import re, os, fnmatch
 """
 Config and options
 """
-filetypes = "avi mpeg mov mp4 wmv"
-outputFile = "discdex.txt"
+FILETYPES = "avi mpeg mov mp4 wmv"
+OUTPUTFILE = "discdex.txt"
 
 
 
@@ -23,7 +23,7 @@ parameters:
 return:
     void
 """
-def discdexIt(batch, destination):
+def append_to_index_file(batch, destination):
 
     with open(destination, "a") as myfile:
         myfile.write(batch)
@@ -32,16 +32,16 @@ def discdexIt(batch, destination):
 
 
 """
-Walk the directory tree and add the files found to a list.
+Walk the device's directory tree and add files matching the criteria to list.
 
 parameters:
     path: string. Root path to work from.
-    filetypes: string. The file types to list.
+    filetype: string. The file types to list.
     
 return:
     list
 """
-def walkIt(path, filetype):
+def walk_device(path, filetype):
 
     results = []
     
@@ -49,14 +49,15 @@ def walkIt(path, filetype):
         for filename in fnmatch.filter(filenames, '*.' + filetype):
             results.append(os.path.join(root, filename))
 
-    print ("Found " + str(len(results)) + " files with ending: " + filetype)
+    print ("Found %s files with ending: %s" 
+        % (len(results), filetype))
 
     return results
 
 
 
 """
-Create string of file metadata and append to list.
+Create indexing entry/string of file metadata and append to list.
 Data should include:
     - Path to device (supplied by user at prompt) 
     - Location device name (supplied by user at prompt) 
@@ -74,7 +75,7 @@ parameters:
 return:
     entries: list. All the files with their stats as string.
 """
-def entryIt(results, currentFiletype, pathToDevice):
+def create_indexing_entry(results, currentFiletype, pathToDevice):
     entries = []
 
     for result in results:
@@ -84,8 +85,9 @@ def entryIt(results, currentFiletype, pathToDevice):
         try:
             pathToFile = re.split(name, pathAndNameToFile)[0]
         except:
-            pathToFile = 'read-error: bad character range'
-            print ("\n Problem with name of file: " + pathAndNameToFile)
+            pathToFile = 'ERROR: bad character range'
+            print ("\n Problem with name of file: %s " 
+                % (pathAndNameToFile))
             pass
 
         #print ('\t' + name)
@@ -108,23 +110,27 @@ def entryIt(results, currentFiletype, pathToDevice):
 """
 MAIN
 """
-ticker = 0
+if __name__ == '__main__': # simultaneously importable module and executable script
 
-#path = "/home/deppi/python/discdex" 
-path = input('Path to disc (ex. /media/bizles/SMALLBITS ): ')
-sourceName = input('Your name for the disc (ex. disc_01): ')
+    ticker = 0  # Keep count of the total files found matching the filetype criteria.
 
-print ("Listing files and folders under: " + path + " and writing to indexing file...")
+    path = "/home/deppi/python/discdex" 
+    #path = input('Path to disc (ex. /media/bizles/SMALLBITS ): ')
+    sourceName = input('Your name for the disc (ex. disc_01): ')
 
-for filetype in filetypes.split(" "):
-    results = walkIt(path, filetype)
-    entries = entryIt(results, filetype, path)
+    print ("Listing files and folders under: %s and writing to indexing file..." 
+        % (path))
 
-    ticker = ticker + len(entries)
+    for filetype in FILETYPES.split(" "):
+        results = walk_device(path, filetype)
+        entries = create_indexing_entry(results, filetype, path)
 
-    for entry in entries:
-        discdexIt(entry, outputFile)
+        ticker = ticker + len(entries)
+
+        for entry in entries:
+            append_to_index(entry, OUTPUTFILE)
 
 
-print ("Total " + str(ticker) + " files written to " + outputFile)
+    print ("Total %i files written to %s"
+        % (ticker, OUTPUTFILE))
 
