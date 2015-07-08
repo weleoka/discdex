@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3 
 
 import re, os, fnmatch
 
@@ -7,7 +7,7 @@ import re, os, fnmatch
 """
 Config and options
 """
-filetypes = "mp3 avi mpeg txt"
+filetypes = "avi mpeg mov mp4 wmv"
 outputFile = "discdex.txt"
 
 
@@ -57,8 +57,9 @@ def walkIt(path, filetype):
 
 """
 Create string of file metadata and append to list.
-Data should include:    
-    - Location device name (supplied by user)
+Data should include:
+    - Path to device (supplied by user at prompt) 
+    - Location device name (supplied by user at prompt) 
     - Path to file
     - Name of file
     - File type
@@ -79,11 +80,18 @@ def entryIt(results, currentFiletype, pathToDevice):
     for result in results:
         name = re.split('.' + currentFiletype, os.path.basename(result))[0]
         pathAndNameToFile = re.split(pathToDevice, result)[1]
-        pathToFile = re.split(name, pathAndNameToFile)[0]
+
+        try:
+            pathToFile = re.split(name, pathAndNameToFile)[0]
+        except:
+            pathToFile = 'read-error: bad character range'
+            print ("\n Problem with name of file: " + pathAndNameToFile)
+            pass
+
+        #print ('\t' + name)
         
-        print ('\t' + name)
-        
-        entries.append('\n'    
+        entries.append('\n'
+            + pathToDevice + '\t' 
             + sourceName  + '\t'                    # Device name
             + pathToFile + '\t'                     # Path to file
             + name + '\t'                           # Name of file
@@ -96,14 +104,15 @@ def entryIt(results, currentFiletype, pathToDevice):
 # print datetime.fromtimestamp(os.path.getmtime(result)).strftime("%d%b%Y %H:%M:%S")
 
 
+
 """
 MAIN
 """
 ticker = 0
 
-path = "/home/deppi/python/discdex" 
-#path = input('Path to disc (ex. /media/bizles/SMALLBITS): ')
-sourceName = input('Name of disc (ex. disc_01): ')
+#path = "/home/deppi/python/discdex" 
+path = input('Path to disc (ex. /media/bizles/SMALLBITS ): ')
+sourceName = input('Your name for the disc (ex. disc_01): ')
 
 print ("Listing files and folders under: " + path + " and writing to indexing file...")
 

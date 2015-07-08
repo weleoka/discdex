@@ -21,7 +21,8 @@ A simple tool to create a log of all files and folders on a removable media devi
 
 Discdex aims to collect metadata on all, or choice, data stored on removable storage devices. The metadata can then be put to use for organising and easily be searched through. Ultimately data can be kept track of more easily with discdex.
 
-
+The default files scanned for are: avi mpeg mov mp4 wmv 
+This can easily be changed in the config part of discdex.py
 
 ### Installation
 1. Git clone or download archive and extract. 
@@ -31,7 +32,7 @@ Discdex aims to collect metadata on all, or choice, data stored on removable sto
 
 
 ### Usage
-Pre-launch: make sure the filetypes you want to index are specified in the config-part discdex.py.
+Pre-launch: make sure the filetypes you want to index are specified in the config-part of discdex.py.
 
 1. Enter path to disc to be indexed at prompt. 
 2. Enter a name/label of your choice for referencing that particular disc. 
@@ -44,12 +45,13 @@ General functinality:
 
 * Walks a directory (recursive) and its subdirectories and records all files found that match the fileType criteria.
 * Saves information on
-	- Name
-	- File type
-	- Location disc name
-	- Full path to file
-	- Size
-	- Date modified
+    - Path to device (supplied by user at prompt) 
+    - Location device name (supplied by user at prompt)
+    - Path to file
+    - Name of file
+    - File type
+    - Date modified
+    - Size
 
 Specs and options:
 
