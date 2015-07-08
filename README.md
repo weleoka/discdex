@@ -93,6 +93,12 @@ Copyright (c) 2015 A.K. Weeks
 
 
 ### Sources, inspiration and notes
-Credits go to docs.python.org, stack-overflow.com,
+Credits go to docs.python.org, stack-overflow.com
+
+How to use hachoir metadata parser:
+https://github.com/jgstew/file-meta-data
+
+Source code for hachoir:
+https://bitbucket.org/haypo/hachoir/wiki/hachoir-metadata
 
 
