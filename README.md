@@ -24,6 +24,11 @@ Discdex aims to collect metadata on all, or choice, data stored on removable sto
 The default files scanned for are: avi mpeg mov mp4 wmv 
 This can easily be changed in the config part of discdex.py
 
+An entry in the indexing file takes the form:
+Path to device - Device name - Path to file - Name of file - File type - Date modified - Size
+
+
+
 ### Installation
 1. Git clone or download archive and extract. 
 2. Make discdex.py executable
