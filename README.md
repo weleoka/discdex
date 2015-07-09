@@ -25,7 +25,8 @@ The default files scanned for are: avi mpeg mov mp4 wmv
 This can easily be changed in the config part of discdex.py
 
 An entry in the indexing file takes the form:
-Path to device - Device name - Path to file - Name of file - File type - Date modified - Size
+
+Path to device - Device name - Path to file - File name - File type - Modified - Size
 
 
 
@@ -48,8 +49,8 @@ Pre-launch: make sure the filetypes you want to index are specified in the confi
 ### Current Features:
 General functinality:
 
-* Walks a directory (recursive) and its subdirectories and records all files found that match the fileType criteria.
-* Saves information on
+* Walk a directory (recursive) and its subdirectories and record all files found that match the fileType criteria.
+* Save information on
     - Path to device (supplied by user at prompt) 
     - Location device name (supplied by user at prompt)
     - Path to file
@@ -60,7 +61,7 @@ General functinality:
 
 Specs and options:
 
-* Easy file type parameters in config.
+* Easy file type filter parameters in config.
 
 
 
@@ -108,6 +109,8 @@ The best way to get your changes merged is as follows:
 
 
 ### Licence
+
+GNU GENERAL PUBLIC LICENSE
 LICENCE.md for details.
 
 Copyright (c) 2015 A.K. Weeks
