@@ -8,6 +8,7 @@ Version 0.0.4
 -------------
 *Release 2015-07-11*
 - Path validity check implemented.
+- Indexing file is now checked for and created if necessary.
 
 
 

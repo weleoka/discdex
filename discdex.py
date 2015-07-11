@@ -16,6 +16,7 @@ OUTPUTFILE = "discdex.txt"
 """
 Append to indexing file.
 The open() function is used with the "a" for append argument.
+If the destination file does not exist python creates it.
 
 parameters:
     entry: string. An entry with file metadata to append to the indexing file
@@ -26,9 +27,15 @@ return:
 """
 def append_to_index_file(entry, destination):
 
-    with open(destination, "a") as myfile:
-        myfile.write(entry)
-        myfile.close()
+    if os.path.isfile(destination):
+        myfile = open(destination, 'a')
+    else:
+        myfile = open(destination, 'w')
+        print("The indexing file - %s - could not be found... creating it." 
+            % (destination))
+
+    myfile.write(entry)
+    myfile.close()
 
 
 

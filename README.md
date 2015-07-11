@@ -51,6 +51,7 @@ General functinality:
 
 * Walk a directory (recursive) and its subdirectories and record file metadata.
 * Checks if path is valid before scanning.
+* Checks to see if the indexing file exists - then creates it or appends to it.
 * Filter files on file type or wildcard(*) search - indexing of all file types.
 * Save information on
     - Path to device (supplied by user at prompt)
