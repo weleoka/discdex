@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 
-import re, os, fnmatch
+import re, os, fnmatch, sys
 
 
 
 """
 Config and options
 """
-#FILETYPES = "avi mpeg mpg mov mp4 wmv"
-FILETYPES = "*"
+FILETYPES = "avi mpeg mpg mov mp4 wmv"
+#FILETYPES = "*"
 OUTPUTFILE = "discdex.txt"
 
 
@@ -50,7 +50,7 @@ def walk_device(path_to_device, filetype):
         for filename in fnmatch.filter(filenames, '*.' + filetype):
             results.append(os.path.join(root, filename))    # /home/bunnybook/python/discdex/FOLDERPHAT/ccc.mp4
 
-    print ("Found %s files with ending: %s"
+    print("Found %s files with ending: %s"
         % (len(results), filetype))
 
     return results
@@ -96,7 +96,7 @@ def create_indexing_entry(results, current_file_type, path_to_device, device_nam
             path_to_file = re.split(name, path_and_name_to_file)[0]
         except:
             path_to_file = 'ERROR: bad character range'
-            print ("\n Problem with name of file: %s "
+            print("\n Problem with name of file: %s "
                 % (path_and_name_to_file))
             pass
 
@@ -111,7 +111,7 @@ def create_indexing_entry(results, current_file_type, path_to_device, device_nam
             )
     return entries
 
-# print datetime.fromtimestamp(os.path.getmtime(result)).strftime("%d%b%Y %H:%M:%S")
+# print(datetime.fromtimestamp(os.path.getmtime(result)).strftime("%d%b%Y %H:%M:%S"))
 
 
 
@@ -122,12 +122,19 @@ if __name__ == '__main__': # simultaneously importable module and executable scr
 
     ticker = 0  # Keep count of the total files found matching the filetype criteria.
 
-    #path_to_device = input('Path to disc (ex. /media/simoni/superCD ): ')
-    path_to_device = "/home/bunnybook/python/discdex" # Un-comment to have a fixed path location to work from.
+    path_to_device = input('Path to disc (ex. /media/simoni/superCD ): ') # Use this to have a promt for path to device.
+    # path_to_device = "/home/bunnybook/python/discdex" # Use this to have a fixed path location to work from.
+
+    if os.path.exists(path_to_device):
+        print("Path valid.")
+    else:
+        print("The path %s appears to not exist. Sorry."
+            % (path_to_device))
+        sys.exit()
+
     device_name = input('Your name for the device (ex. disc_01): ')
 
-    print ("Listing files and folders under: %s and writing to indexing file..."
-        % (path_to_device))
+    print ("Indexing... please wait.")
 
     for filetype in FILETYPES.split(" "):
         results = walk_device(path_to_device, filetype)
@@ -139,6 +146,6 @@ if __name__ == '__main__': # simultaneously importable module and executable scr
             append_to_index_file(entry, OUTPUTFILE)
 
 
-    print ("Total %i files written to %s"
+    print("Done! Total %i files written to %s"
         % (ticker, OUTPUTFILE))
 

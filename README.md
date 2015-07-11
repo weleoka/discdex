@@ -49,7 +49,9 @@ Pre-launch: make sure the filetypes you want to index are specified in the confi
 ### Current Features:
 General functinality:
 
-* Walk a directory (recursive) and its subdirectories and record all files found that match the fileType criteria.
+* Walk a directory (recursive) and its subdirectories and record file metadata.
+* Checks if path is valid before scanning.
+* Filter files on file type or wildcard(*) search - indexing of all file types.
 * Save information on
     - Path to device (supplied by user at prompt)
     - Location device name (supplied by user at prompt)
@@ -58,6 +60,7 @@ General functinality:
     - File type
     - Date modified
     - Size
+
 
 Specs and options:
 
@@ -68,7 +71,6 @@ Specs and options:
 ### Known Issues/Missing Features:
 Functionality:
 
-* Needs to check the supplied path for validity.
 * Missing feature to extract metadata from multimedia files. Needs to import module like Hachoir which can read metadata of various files. Interesting data could be:
 	- Duration
 	- Encoding/codec
@@ -77,7 +79,7 @@ Functionality:
 Specs and options:
 
 * A choice of the file metadata to include in the indexing system.
-* Wildcard "*" to index all file endings currently not working.
+* When using wildcard "*" to index all file endings the filecount for each respective ending come across is not reported to user. One solution is a key-value pair ticker counter in the "walk_device" function.
 
 Security: none
 
@@ -111,6 +113,7 @@ The best way to get your changes merged is as follows:
 ### Licence
 
 GNU GENERAL PUBLIC LICENSE
+
 LICENCE.md for details.
 
 Copyright (c) 2015 A.K. Weeks
