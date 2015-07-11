@@ -4,6 +4,13 @@ Changelog
 Changlog Discdex.
 
 
+Version 0.0.4
+-------------
+*Release 2015-07-11*
+- Path validity check implemented.
+
+
+
 Version 0.0.3
 -------------
 *Release 2015-07-11*
