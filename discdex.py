@@ -194,6 +194,7 @@ def sort_list_of_tuples(sorting_option, data):
         return sorted(data, key=getKey)
         # return sorted(data, key=lambda tup: tup[1])
     elif sorting_option == "2":
+        print("\nTHIS MODE NOT SUPPORTED. SORTING ALPHABETICALLY ONLY IN THIS VERSION OF DISCDEX. ")
         return sorted(data, key=getKey())
     else:
         print("error in sorting mode.")
