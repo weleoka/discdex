@@ -4,6 +4,13 @@ Changelog
 Changelog Discdex.
 
 
+Version 0.0.6
+-------------
+*Release 2015-07-13*
+- Version supports alphabetical listings grouped by device name, in a human friendly file output.
+
+
+
 Version 0.0.5
 -------------
 *Release 2015-07-13*

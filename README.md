@@ -3,7 +3,7 @@ Indexing of files for CD/DVD/HDD or other.
 
 
 ### Discdex versions
-v0.0.5 (current)
+v0.0.6 (current)
 
 (Note to author: version specified in readme.md, changelog.md, and git.)
 
@@ -63,6 +63,8 @@ General functinality:
     - Size
 
 * Make a human readable list of all the entries in the indexing file.
+    - Sort alphabetically
+    - Sort alphabetically, group by device name.
 
 Specs and options:
 
@@ -77,7 +79,6 @@ Functionality:
 	- Duration
 	- Encoding/codec
 	- Bitrate
-* Cannot sort alphabetically and group by device yet.
 
 Specs and options:
 

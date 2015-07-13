@@ -187,15 +187,48 @@ return:
 """
 def sort_list_of_tuples(sorting_option, data):
 
-    def getKey(item):
-        return item[1].lower()  # Sort by File name and disregard upper-lower case.
+    def key_by_name(item):
+        return item[1].lower()  # Sort by File name with disregard to upper-lower case.
+
+    def key_by_location(item):
+        return item[0]  # Sort by location
 
     if sorting_option == "1":
-        return sorted(data, key=getKey)
+        return sorted(data, key=key_by_name)
         # return sorted(data, key=lambda tup: tup[1])
+
     elif sorting_option == "2":
-        print("\nTHIS MODE NOT SUPPORTED. SORTING ALPHABETICALLY ONLY IN THIS VERSION OF DISCDEX. ")
-        return sorted(data, key=getKey())
+        ticker = 0
+        i = 0
+        j = 0
+        arr = sorted(data, key=key_by_location)
+        arr2 = []
+        arr3 = []
+        arr4 = []
+        current_location = arr[0][0]
+
+        for location in arr:
+            i = i + 1
+            ticker = ticker +1
+
+            if current_location != location[0]:
+                print("Drive %s has %s entries."
+                    % (current_location, ticker))
+                ticker = 0
+                current_location = location[0]
+                arr2 = arr[j:i - 1]
+                arr3 = sorted(arr2, key=key_by_name)
+                arr4 = arr4 + arr3
+                j = i
+
+        print("Drive %s has %s entries."
+            % (current_location, ticker))
+        arr2 = arr[j:]
+        arr3 = sorted(arr2, key=key_by_name)
+        arr4 = arr4 + arr3
+
+        return arr4
+
     else:
         print("error in sorting mode.")
         sys.exit()
@@ -226,7 +259,7 @@ def read_indexing_file(source):
 
             # 1, 3 and 4 represent the list index locations of device, and file name  and type respectively.
             try:
-                t.append((arr[1], arr[3] + "." + arr[4]))
+                t.append((arr[1], arr[3] + "." + arr[4]))   #Making tuples from the gathered data.
             except:
                 print("Came across faulty entry: %s"
                     % (arr))
@@ -304,9 +337,12 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
         dataset = read_indexing_file(OUTPUTFILE)
         sorted_list = sort_list_of_tuples(sorting_option, dataset)
 
+        # print(sorted_list)
+
         ticker = 0  # Keep count of the number of entries.
         entries = []
         for item in sorted_list:
+            print(item)
             ticker = ticker + 1
             entries.append("\n" + item[1] + "\t" + item[0])
 
