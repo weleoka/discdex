@@ -62,6 +62,7 @@ General functinality:
     - Date modified
     - Size
 
+* Make a human readable list of all the entries in the indexing file.
 
 Specs and options:
 
@@ -76,13 +77,16 @@ Functionality:
 	- Duration
 	- Encoding/codec
 	- Bitrate
+* Cannot sort alphabetically and group by device yet.
 
 Specs and options:
 
 * A choice of the file metadata to include in the indexing system.
 * When using wildcard "*" to index all file endings the filecount for each respective ending come across is not reported to user. One solution is a key-value pair ticker counter in the "walk_device" function.
 
+
 Security: none
+
 
 Code, style and performance: none
 

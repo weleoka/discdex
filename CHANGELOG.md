@@ -1,7 +1,16 @@
 Changelog
 =========
 
-Changlog Discdex.
+Changelog Discdex.
+
+
+Version 0.0.5
+-------------
+*Release 2015-07-13*
+- Major functionality added that allows outputing data to human-readable sorted list.
+- check_file_status() function axtended to create file with initialising lines as required.
+- New functions added: sort_list_of_tuples() and read_indexing_file().
+
 
 
 Version 0.0.4
