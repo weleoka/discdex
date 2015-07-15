@@ -179,13 +179,13 @@ http://www.pythoncentral.io/how-to-sort-python-dictionaries-by-key-or-value/
 http://www.thegeekstuff.com/2014/06/python-sorted/
 
 parameters:
-    sorting_option: integer. The method of sorting.
     data: list. A list to be sorted.
+    sorting_option: integer. The method of sorting.
 
 return:
     sorted_list: list. A list of the sorted entries.
 """
-def sort_list_of_tuples(sorting_option, data):
+def sort_list_of_tuples(data, sorting_option):
 
     def key_by_name(item):
         return item[1].lower()  # Sort by File name with disregard to upper-lower case.
@@ -230,7 +230,7 @@ def sort_list_of_tuples(sorting_option, data):
         return arr4
 
     else:
-        print("error in sorting mode.")
+        print("\nError in sorting mode.")
         sys.exit()
 
 
@@ -272,13 +272,43 @@ def read_indexing_file(source):
     return t
 
 
-# p.92 in Think Python for string comparison.
+
 """
-Because tuples are immutable, they don’t provide methods like sort and reverse, which
-modify existing lists. But Python provides the built-in functions sorted and reversed,
-which take any sequence as a parameter and return a new list with the same elements
-in a different order.
+Make strings from tuple pairs according to sorting order.
+[1] Alphabetical order.
+[2] Alphabetical order grouped by device name.
+
+parameters:
+    data: list. A list to be stringified.
+    sorting_option: integer. The method of sorting.
+
+return:
+    entries: list. A list of the stringified entries.
+    ticker: integer. A count of all the items listed.
 """
+def stringify_list_of_tuples(data, sorting_option):
+    ticker = 0  # Keep count of the number of entries.
+    entries = []
+
+    if sorting_option == "1":
+        for item in sorted_list:
+            ticker = ticker + 1
+            entries.append("\n" + item[1] + "\t" + item[0])
+
+    elif sorting_option == "2":
+        current_location = data[0][0]
+
+        for location in data:
+            ticker = ticker +1
+
+            if current_location != location[0]:
+                entries.append("\n\n" + location[0] + "\n- - - - - - -")
+                current_location = location[0]
+
+            entries.append("\n" + location[1])
+
+    return entries, ticker
+
 
 
 """
@@ -325,7 +355,7 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
         print("[2] Alphabetical order grouped by device name.")
         sorting_option = input('Enter list sorting option: ')
         list_file = input('\nGive the list file a file name: ')
-        description = input('\nGive the list a description: ')
+        description = input('\nIf you want to then give the list a description: \n')
 
         check_file_status(list_file, "Made using www.github.com/weleoka/discdex\n" + description + "\n")
 
@@ -335,17 +365,9 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
             % (list_file))
 
         dataset = read_indexing_file(OUTPUTFILE)
-        sorted_list = sort_list_of_tuples(sorting_option, dataset)
+        sorted_list = sort_list_of_tuples(dataset, sorting_option)
 
-        # print(sorted_list)
-
-        ticker = 0  # Keep count of the number of entries.
-        entries = []
-        for item in sorted_list:
-            print(item)
-            ticker = ticker + 1
-            entries.append("\n" + item[1] + "\t" + item[0])
-
+        entries, ticker = stringify_list_of_tuples(sorted_list, sorting_option)
 
         for entry in entries:
             append_to_file(entry, list_file)
