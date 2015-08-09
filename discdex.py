@@ -366,7 +366,6 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
 
         dataset = read_indexing_file(OUTPUTFILE)
         sorted_list = sort_list_of_tuples(dataset, sorting_option)
-
         entries, ticker = stringify_list_of_tuples(sorted_list, sorting_option)
 
         for entry in entries:

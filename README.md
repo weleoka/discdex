@@ -75,19 +75,18 @@ Specs and options:
 ### Known Issues/Missing Features:
 Functionality:
 
-* Missing feature to extract metadata from multimedia files. Needs to import module like Hachoir which can read metadata of various files. Interesting data could be:
+* Extract metadata from multimedia files. Needs to import module like Hachoir which can read metadata of various files. Interesting data could be:
 	- Duration
 	- Encoding/codec
 	- Bitrate
+* Export indexing as .CSV (Comma Separated Values) file for easy porting to databases. 
 
 Specs and options:
 
 * A choice of the file metadata to include in the indexing system.
 * When using wildcard "*" to index all file endings the filecount for each respective ending come across is not reported to user. One solution is a key-value pair ticker counter in the "walk_device" function.
 
-
 Security: none
-
 
 Code, style and performance: none
 
