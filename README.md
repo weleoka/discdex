@@ -89,7 +89,7 @@ Functionality:
 	- Encoding/codec
 	- Bitrate
 
-* Fault where the path contains the filename!
+* Fault where the relative path on the device contains the filename!
 
 Specs and options:
 
