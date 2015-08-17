@@ -47,10 +47,28 @@ Pre-launch: make sure the filetypes you want to index are specified in the confi
 #### SQL and exporting index file as CSV file.
 An example of the SQL query to create the table in a MySQL database is as follows:
 
-CREATE TABLE IF NOT EXISTS
-    discdex (path_to_device, device_name, path_to_file, file_name, file_type, modified, size)
+CREATE  TABLE IF NOT EXISTS `mydb`.`Discdex` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `path_to_device` VARCHAR(255) NULL ,
+  `device_name` VARCHAR(255) NULL ,
+  `path_to_file` VARCHAR(255) NULL ,
+  `file_name` VARCHAR(255) NULL ,
+  `file_type` VARCHAR(255) NULL ,
+  `modified` VARCHAR(255) NULL ,
+  `size` INT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
 
 The data in a discdex indexing file can then be exported to a CSV file and inported to the SQL database table.
+
+LOAD DATA INFILE '/path/to/your/csv/file/model.csv'
+INTO TABLE mydb.Discdex
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+ (`path_to_device`,`device_name`,`path_to_file`,`file_name`,`file_type`,`modified`,`size`);
 
 
 ### Current Features:
