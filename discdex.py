@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import re, os, fnmatch, sys
+from time import sleep
 
 
 
@@ -26,12 +27,12 @@ return:
 def check_file_status(destination, initial_line = "Path-to-device\tDevice-name\tPath-to-file\tFile-name\tFile-type\tModified\tSize"):
 
     if os.path.isfile(destination):
-        done = False
-        while not done:
+
+        while 1:
             print("\nThe file being written to exists. What do you want to do?")
             print("\n[1] Append.")
             print("[2] Overwrite.")
-            print("[9] Quit.")
+            print("[9] Return to main menu.")
             option = input("Enter option: ")
             if option == "1":
                 return True
@@ -39,9 +40,10 @@ def check_file_status(destination, initial_line = "Path-to-device\tDevice-name\t
                 myfile = open(destination, 'w')
                 myfile.write(initial_line)
                 myfile.close()
+                return True
             elif option == "9":
-                print("\nShutting down... Thanks for using Discdex\n.")
-                sys.exit()
+                print("\nBack to main menu.\n.")
+                return False
 
     else:
         print("\nThe file - %s - could not be found... creating it."
@@ -239,7 +241,6 @@ def sort_list_of_tuples(data, sorting_option):
 
 
 
-
 """
 Read the indexing file line by line and get file and device name data pairs.
 Open indexing file with r-tag for read only access.
@@ -320,21 +321,47 @@ MAIN
 """
 if __name__ == '__main__': # simultaneously coded as importable module and executable script
 
-    done = False
+    option = "refresh_menu" # Make the initial refreshing of the main menu.
     os.system('cls' if os.name == 'nt' else 'clear')
-    print("\n\t - DISCDEX -")
 
-    while not done:
+    while 1:
+        if not option == "refresh_menu":
+            option = input('Enter option: ')
 
-        print("[1] Add entries to index file.")
-        print("[2] Compile human readable list of entries already in index file.")
-        print("[9] Quit.")
-        option = input('Enter option: ')
+        if option == "1" or option == "2" or option == "3" or option == "9":
+            option = option
+        else:
+            option = "refresh_menu"
+
+        if not os.path.isfile(OUTPUTFILE) and (option == "2" or option == "3"):
+
+            while 1:
+                print("\nCant find the indexing file %s specified.\n"
+                    % (OUTPUTFILE))
+                print("[1] Input name of custom indexing file.")
+                print("[2] Go back to Discdex main.")
+                optionMk2 = input('Enter option: ')
+
+                if optionMk2 == "1":
+                    OUTPUTFILE = input('Enter filename: ')
+                elif optionMk2 == "2":
+                    option = "refresh_menu"
+                    break
+                else:
+                    print("\nDid not recognise the option: %s. Try again.")
+
+    # Refresh the main menu.
+        if option == "refresh_menu":
+            print("\n\t - DISCDEX -")
+            print("[1] Add entries to index file.")
+            print("[2] Compile human readable list of entries already in an index file.")
+            print("[3] Export indexing file as CSV file.")
+            print("[9] Quit.")
+            option = None
 
     # Add entries to indexing file.
-        if option == "1":
-
-            check_file_status(OUTPUTFILE) #, "Path-to-device\tDevice-name\tPath-to-file\tFile-name\tFile-type\tModified\tSize")
+        elif option == "1" and check_file_status(OUTPUTFILE, "Path-to-device\tDevice-name\tPath-to-file\tFile-name\tFile-type\tModified\tSize"):
+            option = "refresh_menu" # Reset the option.
 
             device_name = input('\nYour name for the device (ex. disc_01): ')
 
@@ -355,70 +382,74 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
                     for entry in entries:
                         append_to_file(entry, OUTPUTFILE)
 
-                print("\nDone! Total %i files written to %s"
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print("\nDone! Total %i files written to %s... Returning to main menu..."
                     % (ticker, OUTPUTFILE))
-                done = True
+                sleep(2)
 
             else:
-                print("\nThere seems to be an error in your input. Returning to main menu.\n")
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print("\nNon-valid path <%s>. Returning to main menu...\n"
+                    % (path_to_device))
+                sleep(2)
 
     # Sort the indexing file and make a human readable list of all entries.
         elif option == "2":
+            option = "refresh_menu" # Reset the option.
 
-            doneMk2 = False
+            print("\nChoose a sorting mode for the new list.\n")
+            print("[1] Alphabetical order.")
+            print("[2] Alphabetical order grouped by device name.")
 
-            while not os.path.isfile(OUTPUTFILE) or not doneMk2:
-
-                while not doneMk2:
-                    print("\nCant find the indexing file %s specified.\n"
-                        % (OUTPUTFILE))
-                    print("[1] Enter path and filename to custom indexing file.")
-                    print("[2] Go back to Discdex main.")
-                    option = input('Enter option: ')
-
-                    if option == "1":
-                        OUTPUTFILE = input('Enter filename: ')
-                    elif option == "2":
-                        doneMk2 = True
-                    else:
-                        print("\nDid not recognise the option: %s. Try again.")
-
-            if not doneMk2:
-                print("\nChoose a sorting option for the new list.\n")
-                print("\n[1] Alphabetical order.")
-                print("[2] Alphabetical order grouped by device name.")
+            while 1:
                 sorting_option = input('Enter option: ')
-                list_file = input('\nGive the new list file a file name: ')
-                description = input('\nGive the new list a description (or leave blank): \n')
+                if sorting_option == "1" or sorting_option == "2":
+                    break
 
-                check_file_status(list_file, "Made using www.github.com/weleoka/discdex\n" + description + "\n")
+            list_file = input('\nGive the new list file a file name: ')
+            description = input('\nGive the new list a description (or leave blank): \n')
 
-                print("\nCompiling a human-readable, list of all entries in the indexing file: %s"
-                    % (OUTPUTFILE))
-                print("\nWriting to file: %s"
-                    % (list_file))
+            check_file_status(list_file, "Made using www.github.com/weleoka/discdex\n" + description + "\n")
 
-                dataset = read_indexing_file(OUTPUTFILE)
-                sorted_list = sort_list_of_tuples(dataset, sorting_option)
-                entries, ticker = stringify_list_of_tuples(sorted_list, sorting_option)
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print("\nCompiling a human-readable, list of all entries in the indexing file: %s"
+                % (OUTPUTFILE))
+            print("\nWriting to file: %s\n"
+                % (list_file))
 
-                for entry in entries:
-                    append_to_file(entry, list_file)
+            dataset = read_indexing_file(OUTPUTFILE)
+            sorted_list = sort_list_of_tuples(dataset, sorting_option)
+            entries, ticker = stringify_list_of_tuples(sorted_list, sorting_option)
 
-                print("\nDone! Total %i entries written to %s"
-                    % (ticker, list_file))
-                doneMk2 = True
-                done = True
+            for entry in entries:
+                append_to_file(entry, list_file)
 
+            print("\n...Done! Total %i entries written to %s"
+                % (ticker, list_file))
+            sleep(4)
+
+    # Export an indexing file to the CSV format.
+        elif option == "3":
+            option = "refresh_menu" # Reset the option.
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print("option 3 selected")
+            sleep(2)
+
+    # Quit Discdex.
         elif option == "9":
+            os.system('cls' if os.name == 'nt' else 'clear')
             print("\nShutting down... Thanks for using Discdex.\n")
-            sys.exit()
+            break
 
-        else:
-            print("\nDid not recognise the option: %s. Try again.\n"
-                % (option))
+
+    sys.exit()
 
 
 
 # Notes:
 # print(datetime.fromtimestamp(os.path.getmtime(result)).strftime("%d%b%Y %H:%M:%S"))
+
+
+#       else:
+#            print("\nDid not recognise the option: %s. Try again.\n"
+#                % (option))

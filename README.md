@@ -33,7 +33,7 @@ Path to device - Device name - Path to file - File name - File type - Modified -
 ### Installation
 1. Git clone or download archive and extract.
 2. Make discdex.py executable
-3. Run as bash script "./discdex.py"
+3. Run as shell script "./discdex.py"
 
 
 
@@ -126,7 +126,7 @@ Copyright (c) 2015 A.K. Weeks
 
 
 ### Sources, inspiration and notes
-Credits go to docs.python.org, stack-overflow.com
+Credits go to docs.python.org, stackoverflow.com
 
 How to use hachoir metadata parser:
 https://github.com/jgstew/file-meta-data
