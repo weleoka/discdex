@@ -23,24 +23,28 @@ parameters:
 return:
     boolean
 """
-def check_file_status(destination, initial_line = ""):
+def check_file_status(destination, initial_line = "Path-to-device\tDevice-name\tPath-to-file\tFile-name\tFile-type\tModified\tSize"):
 
     if os.path.isfile(destination):
-        print("\n[1] Append.")
-        print("[2] Over-write.")
-        option = input("The file being written to exists. What do you want to do? ")
-        if option == "1":
-            return True
-        elif option == "2":
-            myfile = open(destination, 'w')
-            myfile.write(initial_line)
-            myfile.close()
-        else:
-            print("Not a recognised option. Exiting")
-            sys.exit()
+        done = False
+        while not done:
+            print("\nThe file being written to exists. What do you want to do?")
+            print("\n[1] Append.")
+            print("[2] Overwrite.")
+            print("[9] Quit.")
+            option = input("Enter option: ")
+            if option == "1":
+                return True
+            elif option == "2":
+                myfile = open(destination, 'w')
+                myfile.write(initial_line)
+                myfile.close()
+            elif option == "9":
+                print("\nShutting down... Thanks for using Discdex\n.")
+                sys.exit()
 
     else:
-        print("The file - %s - could not be found... creating it."
+        print("\nThe file - %s - could not be found... creating it."
             % (destination))
         myfile = open(destination, 'w')
         myfile.write(initial_line)
@@ -60,10 +64,10 @@ return:
 """
 def check_path_status(path):
     if os.path.exists(path):
-        print("Path valid.")
+        print("\nPath valid.\n")
         return True
     else:
-        print("The path %s appears to not exist. Sorry."
+        print("\nThe path %s appears to not exist. Sorry.\n"
             % (path))
         return False
 
@@ -315,71 +319,104 @@ def stringify_list_of_tuples(data, sorting_option):
 MAIN
 """
 if __name__ == '__main__': # simultaneously coded as importable module and executable script
+
+    done = False
+    os.system('cls' if os.name == 'nt' else 'clear')
     print("\n\t - DISCDEX -")
-    print("[1] Add entries to index file.")
-    print("[2] Compile human readable list of entries already in index file.")
-    option = input('Enter option: ')
 
-# Add entries to indexing file.
-    if option == "1":
+    while not done:
 
-        check_file_status(OUTPUTFILE) #, "Path-to-device\tDevice-name\tPath-to-file\tFile-name\tFile-type\tModified\tSize")
+        print("[1] Add entries to index file.")
+        print("[2] Compile human readable list of entries already in index file.")
+        print("[9] Quit.")
+        option = input('Enter option: ')
 
-        device_name = input('\nYour name for the device (ex. disc_01): ')
+    # Add entries to indexing file.
+        if option == "1":
 
-        path_to_device = input('\nPath to disc (ex. /media/simoni/superCD ): ') # Use this to have a promt for path to device.
-        # path_to_device = "/home/bunnybook/python/discdex" # Use this to have a fixed path location to work from.
+            check_file_status(OUTPUTFILE) #, "Path-to-device\tDevice-name\tPath-to-file\tFile-name\tFile-type\tModified\tSize")
 
-        if check_path_status(path_to_device):
-            print ("\nIndexing... please wait.")
+            device_name = input('\nYour name for the device (ex. disc_01): ')
 
-            ticker = 0  # Keep count of the total files found matching the filetype criteria.
+            path_to_device = input('\nPath to disc (ex. /media/simoni/superCD ): ') # Use this to have a promt for path to device.
+            # path_to_device = "/home/bunnybook/python/discdex" # Use this to have a fixed path location to work from.
 
-            for filetype in FILETYPES.split(" "):
-                results = walk_device(path_to_device, filetype)
-                entries = create_indexing_entry(results, filetype, path_to_device, device_name)
+            if check_path_status(path_to_device):
+                print ("\nIndexing... please wait.")
 
-                ticker = ticker + len(entries)
+                ticker = 0  # Keep count of the total files found matching the filetype criteria.
+
+                for filetype in FILETYPES.split(" "):
+                    results = walk_device(path_to_device, filetype)
+                    entries = create_indexing_entry(results, filetype, path_to_device, device_name)
+
+                    ticker = ticker + len(entries)
+
+                    for entry in entries:
+                        append_to_file(entry, OUTPUTFILE)
+
+                print("\nDone! Total %i files written to %s"
+                    % (ticker, OUTPUTFILE))
+                done = True
+
+            else:
+                print("\nThere seems to be an error in your input. Returning to main menu.\n")
+
+    # Sort the indexing file and make a human readable list of all entries.
+        elif option == "2":
+
+            doneMk2 = False
+
+            while not os.path.isfile(OUTPUTFILE) or not doneMk2:
+
+                while not doneMk2:
+                    print("\nCant find the indexing file %s specified.\n"
+                        % (OUTPUTFILE))
+                    print("[1] Enter path and filename to custom indexing file.")
+                    print("[2] Go back to Discdex main.")
+                    option = input('Enter option: ')
+
+                    if option == "1":
+                        OUTPUTFILE = input('Enter filename: ')
+                    elif option == "2":
+                        doneMk2 = True
+                    else:
+                        print("\nDid not recognise the option: %s. Try again.")
+
+            if not doneMk2:
+                print("\nChoose a sorting option for the new list.\n")
+                print("\n[1] Alphabetical order.")
+                print("[2] Alphabetical order grouped by device name.")
+                sorting_option = input('Enter option: ')
+                list_file = input('\nGive the new list file a file name: ')
+                description = input('\nGive the new list a description (or leave blank): \n')
+
+                check_file_status(list_file, "Made using www.github.com/weleoka/discdex\n" + description + "\n")
+
+                print("\nCompiling a human-readable, list of all entries in the indexing file: %s"
+                    % (OUTPUTFILE))
+                print("\nWriting to file: %s"
+                    % (list_file))
+
+                dataset = read_indexing_file(OUTPUTFILE)
+                sorted_list = sort_list_of_tuples(dataset, sorting_option)
+                entries, ticker = stringify_list_of_tuples(sorted_list, sorting_option)
 
                 for entry in entries:
-                    append_to_file(entry, OUTPUTFILE)
+                    append_to_file(entry, list_file)
 
-            print("\nDone! Total %i files written to %s"
-                % (ticker, OUTPUTFILE))
-        else:
+                print("\nDone! Total %i entries written to %s"
+                    % (ticker, list_file))
+                doneMk2 = True
+                done = True
+
+        elif option == "9":
+            print("\nShutting down... Thanks for using Discdex.\n")
             sys.exit()
 
-# Sort the indexing file and make a human readable list of all entries.
-    elif option == "2":
-        print("\n[1] Alphabetical order.")
-        print("[2] Alphabetical order grouped by device name.")
-        sorting_option = input('Enter list sorting option: ')
-        list_file = input('\nGive the list file a file name: ')
-        description = input('\nIf you want to then give the list a description: \n')
-
-        check_file_status(list_file, "Made using www.github.com/weleoka/discdex\n" + description + "\n")
-
-        print("\nCompiling a human-readable, list of all entries in the indexing file: %s"
-            % (OUTPUTFILE))
-        print("\nWriting to file: %s"
-            % (list_file))
-
-        dataset = read_indexing_file(OUTPUTFILE)
-        sorted_list = sort_list_of_tuples(dataset, sorting_option)
-        entries, ticker = stringify_list_of_tuples(sorted_list, sorting_option)
-
-        for entry in entries:
-            append_to_file(entry, list_file)
-
-        print("\nDone! Total %i entries written to %s"
-            % (ticker, list_file))
-
-# Not a valid option.
-    else:
-        print("\nDid not recognise the option: %s. Exiting program."
-            % (option))
-        sys.exit()
-
+        else:
+            print("\nDid not recognise the option: %s. Try again.\n"
+                % (option))
 
 
 
