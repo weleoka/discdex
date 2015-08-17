@@ -24,7 +24,7 @@ parameters:
 return:
     boolean
 """
-def check_file_status(destination, initial_line = "Path-to-device\tDevice-name\tPath-to-file\tFile-name\tFile-type\tModified\tSize"):
+def check_file_status(destination, initial_line = ""):
 
     if os.path.isfile(destination):
 
@@ -90,7 +90,6 @@ return:
 def append_to_file(entry, destination):
 
     myfile = open(destination, 'a')
-
     myfile.write(entry)
     myfile.close()
 
@@ -360,7 +359,7 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
             option = None
 
     # Add entries to indexing file.
-        elif option == "1" and check_file_status(OUTPUTFILE, "Path-to-device\tDevice-name\tPath-to-file\tFile-name\tFile-type\tModified\tSize"):
+        elif option == "1" and check_file_status(OUTPUTFILE): #, "Path-to-device\tDevice-name\tPath-to-file\tFile-name\tFile-type\tModified\tSize"):
             option = "refresh_menu" # Reset the option.
 
             device_name = input('\nYour name for the device (ex. disc_01): ')
@@ -432,7 +431,27 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
         elif option == "3":
             option = "refresh_menu" # Reset the option.
             os.system('cls' if os.name == 'nt' else 'clear')
-            print("option 3 selected")
+            print("Export indexing file data to CSV file.")
+            csv_file = input('\nGive the new CSV file a name (example.csv): ')
+            check_file_status(csv_file)
+
+            f = open(OUTPUTFILE, 'r')
+            line = f.readline()
+            ticker = 0
+
+            while line:
+                if not line in ['\n', '\r\n']: # Ignore blank lines
+                    csv_line = line.replace('\t', ',')
+                    # arr = re.split('\t', line)
+                    # print(arr)
+                    # entry = re.join(',', arr)
+                    append_to_file(csv_line, csv_file)
+                    ticker = ticker + 1
+
+                line = f.readline()
+
+            print("\nCSV %s file created containing %s lines"
+                % (csv_file, ticker))
             sleep(2)
 
     # Quit Discdex.

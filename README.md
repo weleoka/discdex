@@ -44,6 +44,13 @@ Pre-launch: make sure the filetypes you want to index are specified in the confi
 2. Enter a name/label of your choice for referencing that particular disc.
 3. Let the work be done by discdex!
 
+#### SQL and exporting index file as CSV file.
+An example of the SQL query to create the table in a MySQL database is as follows:
+
+CREATE TABLE IF NOT EXISTS
+    discdex (path_to_device, device_name, path_to_file, file_name, file_type, modified, size)
+
+The data in a discdex indexing file can then be exported to a CSV file and inported to the SQL database table.
 
 
 ### Current Features:
@@ -66,6 +73,8 @@ General functinality:
     - Sort alphabetically
     - Sort alphabetically, group by device name.
 
+* Export indexing as .CSV (Comma Separated Values) file for easy porting to databases.
+
 Specs and options:
 
 * Easy file type filter parameters in config.
@@ -79,7 +88,8 @@ Functionality:
 	- Duration
 	- Encoding/codec
 	- Bitrate
-* Export indexing as .CSV (Comma Separated Values) file for easy porting to databases. 
+
+* Fault where the path contains the filename!
 
 Specs and options:
 
