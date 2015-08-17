@@ -3,7 +3,7 @@ Indexing of files for CD/DVD/HDD or other.
 
 
 ### Discdex versions
-v0.0.6 (current)
+v0.0.7 (current)
 
 (Note to author: version specified in readme.md, changelog.md, and git.)
 

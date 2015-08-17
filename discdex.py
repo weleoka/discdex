@@ -334,12 +334,12 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
             option = "refresh_menu"
 
         if not os.path.isfile(OUTPUTFILE) and (option == "2" or option == "3"):
+            print("\nCant find the indexing file %s specified.\n"
+                % (OUTPUTFILE))
+            print("[1] Input name of custom indexing file.")
+            print("[2] Go back to Discdex main.")
 
             while 1:
-                print("\nCant find the indexing file %s specified.\n"
-                    % (OUTPUTFILE))
-                print("[1] Input name of custom indexing file.")
-                print("[2] Go back to Discdex main.")
                 optionMk2 = input('Enter option: ')
 
                 if optionMk2 == "1":
@@ -448,8 +448,3 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
 
 # Notes:
 # print(datetime.fromtimestamp(os.path.getmtime(result)).strftime("%d%b%Y %H:%M:%S"))
-
-
-#       else:
-#            print("\nDid not recognise the option: %s. Try again.\n"
-#                % (option))

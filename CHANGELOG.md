@@ -4,6 +4,13 @@ Changelog
 Changelog Discdex.
 
 
+Version 0.0.7
+-------------
+*Release 2015-08-17*
+- Major menu overhaul.
+
+
+
 Version 0.0.6
 -------------
 *Release 2015-07-13*
