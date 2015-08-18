@@ -67,7 +67,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 ```
 
-Then load the data into the table from the .csv Discdex exported.
+Then load the data into the table from the .csv file which Discdex generated.
 
 ```SQL
 LOAD DATA INFILE '/path/to/your/csv/file/model.csv'

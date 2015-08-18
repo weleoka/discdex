@@ -304,12 +304,13 @@ def stringify_list_of_tuples(data, sorting_option):
 
     elif sorting_option == "2":
         current_location = data[0][0]
+        entries.append("\n\n\n" + current_location + "\n- - - - - - -")
 
         for location in data:
             ticker = ticker +1
 
             if current_location != location[0]:
-                entries.append("\n\n" + location[0] + "\n- - - - - - -")
+                entries.append("\n\n\n" + location[0] + "\n- - - - - - -")
                 current_location = location[0]
 
             entries.append("\n" + location[1])
@@ -402,33 +403,38 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
             print("\nChoose a sorting mode for the new list.\n")
             print("[1] Alphabetical order.")
             print("[2] Alphabetical order grouped by device name.")
+            print("[9] Main menu.")
 
             while 1:
                 sorting_option = input('Enter option: ')
                 if sorting_option == "1" or sorting_option == "2":
+                    list_file = input('\nGive the new list file a file name: ')
+                    description = input('\nGive the new list a description (or leave blank): \n')
+
+                    check_file_status(list_file, "Made using www.github.com/weleoka/discdex\n" + description + "\n")
+
+                    os.system('cls' if os.name == 'nt' else 'clear')
+                    print("\nCompiling a human-readable, list of all entries in the indexing file: %s"
+                        % (OUTPUTFILE))
+                    print("\nWriting to file: %s\n"
+                        % (list_file))
+
+                    dataset = read_indexing_file(OUTPUTFILE)
+                    sorted_list = sort_list_of_tuples(dataset, sorting_option)
+                    entries, ticker = stringify_list_of_tuples(sorted_list, sorting_option)
+
+                    for entry in entries:
+                        append_to_file(entry, list_file)
+
+                    print("\n...Done! Total %i entries written to %s"
+                        % (ticker, list_file))
+                    sleep(4)
                     break
 
-            list_file = input('\nGive the new list file a file name: ')
-            description = input('\nGive the new list a description (or leave blank): \n')
+                elif sorting_option == "9":
+                    break
 
-            check_file_status(list_file, "Made using www.github.com/weleoka/discdex\n" + description + "\n")
 
-            os.system('cls' if os.name == 'nt' else 'clear')
-            print("\nCompiling a human-readable, list of all entries in the indexing file: %s"
-                % (OUTPUTFILE))
-            print("\nWriting to file: %s\n"
-                % (list_file))
-
-            dataset = read_indexing_file(OUTPUTFILE)
-            sorted_list = sort_list_of_tuples(dataset, sorting_option)
-            entries, ticker = stringify_list_of_tuples(sorted_list, sorting_option)
-
-            for entry in entries:
-                append_to_file(entry, list_file)
-
-            print("\n...Done! Total %i entries written to %s"
-                % (ticker, list_file))
-            sleep(4)
 
     # Export an indexing file to the CSV format.
         elif option == "3":
