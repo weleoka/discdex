@@ -33,18 +33,19 @@ Path to device - Device name - Path to file - File name - File type - Modified -
 ### Installation
 1. Git clone or download archive and extract.
 2. Make discdex.py executable
-3. Run as shell script "./discdex.py"
+3. Run as shell script "./discdex.py" in a terminal.
 
 
 
 ### Usage
-Pre-launch: make sure the filetypes you want to index are specified in the config-part of discdex.py.
+Pre-launch: make sure the filetypes you want to index are specified in the config-part of discdex.py, youse wildcard * to index all files.
 
-1. Enter path to disc to be indexed at prompt.
-2. Enter a name/label of your choice for referencing that particular disc.
+1. Go to the home folder of discdex in a terminal and run as shell script "./discdex.py".
+2. Follow menu instructions.
 3. Let the work be done by discdex!
 
-#### SQL and exporting index file as CSV file.
+
+#### SQL and using the .csv file exported by Discdex
 An example of the SQL query to create the table in a MySQL database is as follows:
 
 ```SQL
@@ -112,7 +113,10 @@ Specs and options:
 
 
 
-### Known Issues/Missing Features:
+### Bugs, known Issues and missing Features:
+
+Please report an issue if one is found.
+
 Functionality:
 
 * Extract metadata from multimedia files. Needs to import module like Hachoir which can read metadata of various files. Interesting data could be:
@@ -132,12 +136,8 @@ Code, style and performance: none
 
 
 
-### Bugs and Issues
-Please report an issue if one is found.
-
-
-
 ### Contributing
+
 If you'd like to contribute to Discdex's development, start by forking the GitHub repo:
 
 https://github.com/weleoka/discdex.git
