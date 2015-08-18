@@ -47,7 +47,7 @@ Pre-launch: make sure the filetypes you want to index are specified in the confi
 #### SQL and exporting index file as CSV file.
 An example of the SQL query to create the table in a MySQL database is as follows:
 
-```
+```SQL
 USE dbteknik;
 
 CREATE  TABLE IF NOT EXISTS `mydb`.`Discdex`
@@ -68,7 +68,7 @@ DEFAULT CHARACTER SET = utf8;
 
 Then load the data into the table from the .csv Discdex exported.
 
-```
+```SQL
 LOAD DATA INFILE '/path/to/your/csv/file/model.csv'
 INTO TABLE mydb.Discdex
 FIELDS TERMINATED BY ','
