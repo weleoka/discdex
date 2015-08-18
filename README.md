@@ -3,7 +3,7 @@ Indexing of files for CD/DVD/HDD or other.
 
 
 ### Discdex versions
-v0.0.7 (current)
+v0.0.8 (current)
 
 (Note to author: version specified in readme.md, changelog.md, and git.)
 
@@ -47,29 +47,42 @@ Pre-launch: make sure the filetypes you want to index are specified in the confi
 #### SQL and exporting index file as CSV file.
 An example of the SQL query to create the table in a MySQL database is as follows:
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`Discdex` (
-  `id` INT NOT NULL AUTO_INCREMENT ,
-  `path_to_device` VARCHAR(255) NULL ,
-  `device_name` VARCHAR(255) NULL ,
-  `path_to_file` VARCHAR(255) NULL ,
-  `file_name` VARCHAR(255) NULL ,
-  `file_type` VARCHAR(255) NULL ,
-  `modified` VARCHAR(255) NULL ,
-  `size` INT NULL ,
-  PRIMARY KEY (`id`) )
+```
+USE dbteknik;
+
+CREATE  TABLE IF NOT EXISTS `mydb`.`Discdex`
+(
+    `id` INT NOT NULL AUTO_INCREMENT ,
+    `path_to_device` VARCHAR(255) NULL ,
+    `device_name` VARCHAR(255) NULL ,
+    `path_to_file` VARCHAR(255) NULL ,
+    `file_name` VARCHAR(255) NULL ,
+    `file_type` VARCHAR(255) NULL ,
+    `modified` BIGINT NULL ,
+    `size` BIGINT NULL ,
+    PRIMARY KEY (`id`)
+)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+```
 
+Then load the data into the table from the .csv Discdex exported.
 
-The data in a discdex indexing file can then be exported to a CSV file and inported to the SQL database table.
-
+```
 LOAD DATA INFILE '/path/to/your/csv/file/model.csv'
 INTO TABLE mydb.Discdex
-FIELDS TERMINATED BY '\t'
+FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-IGNORE 1 LINES
- (`path_to_device`,`device_name`,`path_to_file`,`file_name`,`file_type`,`modified`,`size`);
-
+ (
+    `path_to_device`,
+    `device_name`,
+    `path_to_file`,
+    `file_name`,
+    `file_type`,
+    `modified`,
+    `size`
+);
+```
 
 ### Current Features:
 General functinality:
@@ -107,7 +120,6 @@ Functionality:
 	- Encoding/codec
 	- Bitrate
 
-* Fault where the relative path on the device contains the filename!
 
 Specs and options:
 

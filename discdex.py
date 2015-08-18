@@ -144,19 +144,22 @@ def create_indexing_entry(results, current_file_type, path_to_device, device_nam
     entries = []
 
     for result in results:
-        file_full_name = os.path.basename(result)
+        file_base_name = os.path.basename(result)
 
         if current_file_type == '*':
-            file_type = (re.split('\.', file_full_name))[-1]  # This is so that a file type can be assigned to the current entry.
+            file_type = (re.split('\.', file_base_name))[-1]  # This is so that a file type can be assigned to the current entry.
         else:
             file_type = current_file_type
 
-        name = re.split('.' + file_type, file_full_name)[0]
+        name = re.split('.' + file_type, file_base_name)[0]
 
         path_and_name_to_file = re.split(path_to_device, result)[1]
 
         try:
-            path_to_file = re.split(name, path_and_name_to_file)[0]
+            path_to_file = re.split(path_to_device, os.path.dirname(result))[-1] # re.split(name, path_and_name_to_file)[0]
+            path_to_file = path_to_file + "/"
+            print("hot: %s"
+                % (path_to_file))
         except:
             path_to_file = 'ERROR: bad character range'
             print("\n Problem with name of file: %s "
@@ -164,7 +167,7 @@ def create_indexing_entry(results, current_file_type, path_to_device, device_nam
             pass
 
         entries.append('\n'
-            + path_to_device + '\t'                     # System path to device
+            + path_to_device + '\t'                        # System path to device
             + device_name  + '\t'                       # Device name
             + path_to_file + '\t'                           # Path to file
             + name + '\t'                                   # Name of file
@@ -441,10 +444,8 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
 
             while line:
                 if not line in ['\n', '\r\n']: # Ignore blank lines
-                    csv_line = line.replace('\t', ',')
-                    # arr = re.split('\t', line)
-                    # print(arr)
-                    # entry = re.join(',', arr)
+                    clean_line = line.replace(',', '_')   # Sanitise commas in dir and filenames.
+                    csv_line = clean_line.replace('\t', ',')  # Replace tabs with commas.
                     append_to_file(csv_line, csv_file)
                     ticker = ticker + 1
 

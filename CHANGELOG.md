@@ -3,6 +3,12 @@ Changelog
 
 Changelog Discdex.
 
+Version 0.0.8
+-------------
+*Release 2015-08-18*
+- Fixed fault where the relative path on the device contained the filename.
+- Added documentation for MySQL export and import with .csv file.
+
 
 Version 0.0.7
 -------------
