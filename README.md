@@ -3,7 +3,7 @@ Indexing of files for CD/DVD/HDD or other.
 
 
 ### Discdex versions
-v0.0.8 (current)
+v0.0.9 (current)
 
 (Note to author: version specified in readme.md, changelog.md, and git.)
 
@@ -123,7 +123,8 @@ Functionality:
 	- Duration
 	- Encoding/codec
 	- Bitrate
-
+* Auto-detect path to CD/Flash drives.
+* Modify mnt_autodetect.py to support detecting CDs.
 
 Specs and options:
 

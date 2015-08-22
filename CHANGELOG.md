@@ -3,6 +3,14 @@ Changelog
 
 Changelog Discdex.
 
+Version 0.0.9
+-------------
+*Release 2015-08-22*
+- Divided code into modules dd_proc and dd_fs (dd_filesystem) utilities.
+- Scans for USB devices to get path.
+
+
+
 Version 0.0.8
 -------------
 *Release 2015-08-18*
