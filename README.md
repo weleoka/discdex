@@ -124,6 +124,8 @@ Functionality:
 	- Duration
 	- Encoding/codec
 	- Bitrate
+* Print indexing file to terminal window option.
+* If no data is written to the sorted list file because the indexing file is empty then it should be deleted.
 
 Specs and options:
 

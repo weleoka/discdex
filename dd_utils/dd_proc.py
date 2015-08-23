@@ -86,7 +86,7 @@ def sort_list_of_tuples(data, sorting_option):
         return sorted(data, key=key_by_name)
         # return sorted(data, key=lambda tup: tup[1])
 
-    elif sorting_option == "2":
+    elif sorting_option == "2" and len(data) > 0:
         ticker = 0
         i = 0
         j = 0
@@ -119,8 +119,8 @@ def sort_list_of_tuples(data, sorting_option):
         return arr4
 
     else:
-        print("\nError in sorting mode.")
-        sys.exit()
+        return None
+        
 
 
 
@@ -145,7 +145,7 @@ def stringify_list_of_tuples(data, sorting_option):
     if sorting_option == "1":
         for item in data:
             ticker = ticker + 1
-            entries.append("\n" + item[1] + "\t" + item[0])
+            entries.append("\n" + item[1] + "\t\t" + item[0])
 
     elif sorting_option == "2":
         current_location = data[0][0]

@@ -14,22 +14,35 @@ return:
 def check_file_status(destination, initial_line = ""):
 
     if os.path.isfile(destination):
-
         while True:
             print("\nThe file being written to exists. What do you want to do?")
             print("\n[1] Append.")
             print("[2] Overwrite.")
             print("[9] Return to main menu.")
             option = input("Enter option: ")
+
             if option == "1":
                 return True
+
             elif option == "2":
-                myfile = open(destination, 'w')
-                myfile.write(initial_line)
-                myfile.close()
-                return True
+                while True:
+                        y_n = input("Are you sure you want to overwrite the indexing file %s? y/n: "
+                            % (destination))
+
+                        if y_n in ['y', 'n']:
+
+                                if y_n == 'y':
+                                    myfile = open(destination, 'w')
+                                    myfile.write(initial_line)
+                                    myfile.close()
+                                    return True
+
+                                elif y_n == 'n':
+                                    option = "9"
+                                    break
+
             elif option == "9":
-                print("\nBack to main menu.\n.")
+                print("\nReturned to main menu.\n")
                 return False
 
     else:
