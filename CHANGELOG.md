@@ -3,12 +3,19 @@ Changelog
 
 Changelog Discdex.
 
+
+Version 0.0.10
+-------------
+*Release 2015-08-23*
+- Lists mounted file systems and generates a select list for indexing.
+- Checks for devices allready in index against user input to prevent doubles.
+
+
 Version 0.0.9
 -------------
 *Release 2015-08-22*
 - Divided code into modules dd_proc and dd_fs (dd_filesystem) utilities.
-- Scans for USB devices to get path.
-
+- Scans for mounted USB devices.
 
 
 Version 0.0.8

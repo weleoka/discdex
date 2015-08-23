@@ -15,7 +15,7 @@ def check_file_status(destination, initial_line = ""):
 
     if os.path.isfile(destination):
 
-        while 1:
+        while True:
             print("\nThe file being written to exists. What do you want to do?")
             print("\n[1] Append.")
             print("[2] Overwrite.")
@@ -116,7 +116,7 @@ parameters:
     source: string. the indexing file to read information from.
 
 return:
-    entries: list. A list of the sorted entries.
+    t: list. A list of the entries.
 """
 def read_indexing_file(source):
 

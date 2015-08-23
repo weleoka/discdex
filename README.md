@@ -3,7 +3,7 @@ Indexing of files for CD/DVD/HDD or other.
 
 
 ### Discdex versions
-v0.0.9 (current)
+v0.0.10 (current)
 
 (Note to author: version specified in readme.md, changelog.md, and git.)
 
@@ -89,6 +89,7 @@ LINES TERMINATED BY '\n'
 General functinality:
 
 * Walk a directory (recursive) and its subdirectories and record file metadata.
+* Looks for mounted file systems and gives as a list to choose from.
 * Checks if path is valid before scanning.
 * Checks to see if the indexing file exists - then creates it or appends to it.
 * Filter files on file type or wildcard(*) search - indexing of all file types.
@@ -123,15 +124,14 @@ Functionality:
 	- Duration
 	- Encoding/codec
 	- Bitrate
-* Auto-detect path to CD/Flash drives.
-* Modify mnt_autodetect.py to support detecting CDs.
 
 Specs and options:
 
 * A choice of the file metadata to include in the indexing system.
 * When using wildcard "*" to index all file endings the filecount for each respective ending come across is not reported to user. One solution is a key-value pair ticker counter in the "walk_device" function.
 
-Security: none
+Security:
+* Encrypted indexing file.
 
 Code, style and performance: none
 

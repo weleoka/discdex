@@ -10,11 +10,21 @@ def get_usb_devices():
     usb_devices = (dev for dev in sdb_devices
         if 'usb' in dev.split('/')[5])
     # for dev in sdb_devices:
-        # print (os.path.basename(dev), dev)
+       # print ("aa: %s, bb: %s"
+          #  % (os.path.basename(dev), dev))
     return dict((os.path.basename(dev), dev) for dev in usb_devices)
 
+def get_removable_devices():
+    sdb_devices = map(os.path.realpath, glob('/sys/block/s*'))
+    rem_devices = (dev for dev in sdb_devices
+        if 'usb' or 'sr0' in dev.split('/')[5])
+    #for dev in sdb_devices:
+      #  print ("aa: %s, bb: %s"
+        #    % (os.path.basename(dev), dev))
+    return dict((os.path.basename(dev), dev) for dev in rem_devices)
+
 def get_mount_points(devices=None):
-    devices = devices or get_usb_devices() # if devices are None: get_usb_devices
+    devices = devices or get_removable_devices() # if devices are None: get_usb_devices
     output = check_output(['mount']).splitlines()
     is_usb = lambda path: any(dev in path for dev in devices)
     usb_info = (line for line in output if is_usb(line.decode().split()[0]))    #python3 needs to decode to str.

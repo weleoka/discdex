@@ -10,9 +10,10 @@ from numbers import Number
 """
 Config and options
 """
-FILETYPES = "avi mpeg mpg mov mp4 wmv"
-#FILETYPES = "*"
-OUTPUTFILE = "discdex.txt"
+FILETYPES = "avi mpeg mpg mov mp4 wmv"  ## File endings to search for
+#FILETYPES = "*"    ## Use wildcard * to index all file endings.
+OUTPUTFILE = "discdex.txt"  ## Default indexing file.
+list_file = "hotel.txt" ## Default human readable list file.
 
 
 
@@ -63,17 +64,35 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
         elif option == "1" and dd_fs.check_file_status(OUTPUTFILE): #, "Path-to-device\tDevice-name\tPath-to-file\tFile-name\tFile-type\tModified\tSize"):
             option = "refresh_menu" # Reset the option.
 
-            device_name = input('\nYour name for the device (ex. disc_01): ')
+            current_device = ""
+            device_list = []
+            for line in dd_fs.read_indexing_file(OUTPUTFILE):
+                if current_device != line[0]:
+                    device_list. append(line[0])
+                    current_device = line[0]
+
+            while True:
+                print("\nCurrently indexed device names are:\n%s"
+                    % (device_list))
+                device_name = input('Enter a name for the new device (ex. disc_01): ')
+                if device_name in device_list:
+                    if input("%s as a device name already exists. Do you want to continue? y/n"
+                        % (device_name)) in ['y', 'n']:
+                        if device_name == 'y':
+                            break
+                        elif device_name == 'n':
+                            continue
+                break
 
             mnt_points = mnt_autodetect.get_mount_points()
             i = 0
             print ("\n")
             for mnt_point in mnt_points:
                 i = i + 1
-                print("[%i] %s"
-                    % (i, mnt_point[1].decode()))
+                print("[%i] %s %s"
+                    % (i, mnt_point[0].decode().split('/')[2], mnt_point[1].decode()))
 
-            path_to_device = input('\nPath to disc (ex. /media/simoni/superCD ): ') # Use this to have a promt for path to device.
+            path_to_device = input('Enter option or path (ex. /media/simoni/superCD ): ') # Use this to have a promt for path to device.
             # path_to_device = "/home/bunnybook/python/discdex" # Use this to have a fixed path location to work from.
             # isinstance(path_to_device, Number) and
 
@@ -99,10 +118,10 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
                     for entry in entries:
                         dd_fs.append_to_file(entry, OUTPUTFILE)
 
-                os.system('cls' if os.name == 'nt' else 'clear')
                 print("\nDone! Total %i files written to %s... Returning to main menu..."
                     % (ticker, OUTPUTFILE))
-                sleep(2)
+                sleep(3)
+                os.system('cls' if os.name == 'nt' else 'clear')
 
             else:
                 os.system('cls' if os.name == 'nt' else 'clear')
@@ -122,7 +141,7 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
             while True:
                 sorting_option = input('Enter option: ')
                 if sorting_option == "1" or sorting_option == "2":
-                    list_file = input('\nGive the new list file a file name: ')
+                    list_file = list_file or input('\nGive the new list file a file name: ')    # Use specified or query for new.
                     description = input('\nGive the new list a description (or leave blank): \n')
 
                     dd_fs.check_file_status(list_file, "\tMade using www.github.com/weleoka/discdex\n" + description + "\n")
