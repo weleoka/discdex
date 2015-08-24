@@ -1,20 +1,26 @@
 #!/usr/bin/env python3
-# Courtesy of:
-# http://stackoverflow.com/questions/22615750/how-can-the-directory-of-a-usb-drive-connected-to-a-system-be-obtained
+"""
+Utility module for Discdex.
+Module which contains functions which access the filesystem and checks for mounted devices.
+
+Partly courtesy of:
+http://stackoverflow.com/questions/22615750/how-can-the-directory-of-a-usb-drive-connected-to-a-system-be-obtained
+"""
+
 import os
 from glob import glob
 from subprocess import check_output, CalledProcessError
 
 
-"""
-Description
-
-parameters:
-   
-return:
-    
-"""
 def get_usb_devices():
+    """
+    Description
+
+    parameters:
+       
+    return:
+        
+    """
     sdb_devices = map(os.path.realpath, glob('/sys/block/sd*'))
     usb_devices = (dev for dev in sdb_devices
         if 'usb' in dev.split('/')[5])
@@ -25,15 +31,15 @@ def get_usb_devices():
     return dict((os.path.basename(dev), dev) for dev in usb_devices)
 
 
-"""
-Description
-
-parameters:
-   
-return:
-    
-"""
 def get_mounted_filesystems():
+    """
+    Description
+
+    parameters:
+       
+    return:
+        
+    """
     sdb_devices = map(os.path.realpath, glob('/sys/block/s*'))
     rem_devices = (dev for dev in sdb_devices
         if 'usb' or 'sr0' in dev.split('/')[5])
@@ -44,15 +50,15 @@ def get_mounted_filesystems():
     return dict((os.path.basename(dev), dev) for dev in rem_devices)
 
 
-"""
-Description
-
-parameters:
-   
-return:
-    
-"""
 def get_mount_points(devices=None):
+    """
+    Description
+
+    parameters:
+       
+    return:
+        
+    """
     devices = devices or get_mounted_filesystems() # if devices are None: get_mounted_filesystems
     output = check_output(['mount']).splitlines()
     is_usb = lambda path: any(dev in path for dev in devices)

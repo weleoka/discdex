@@ -1,17 +1,22 @@
+"""
+Utility module for Discdex.
+Module containing functions that access the local file system.
+"""
+
 import re, fnmatch, os
 
-"""
-Check status of a file, does it exist or not?
-If the file does not exist - create it. Optionally, in the code, with an inital legend.
-
-parameters:
-    destination: string. the indexing file to check status of.
-    initial_line: string. The first line of the new file. A legend, or some other text.
-
-return:
-    boolean
-"""
 def check_file_status(destination, initial_line = ""):
+    """
+    Check status of a file, does it exist or not?
+    If the file does not exist - create it. Optionally, in the code, with an inital legend.
+
+    parameters:
+        destination: string. the indexing file to check status of.
+        initial_line: string. The first line of the new file. A legend, or some other text.
+
+    return:
+        boolean
+    """
 
     if os.path.isfile(destination):
 
@@ -59,17 +64,16 @@ def check_file_status(destination, initial_line = ""):
         return True
 
 
-
-"""
-Check status of path to storage device.
-
-parameters:
-    path: string. The directory path to check for validity.
-
-return:
-    boolean
-"""
 def check_path_status(path):
+    """
+    Check status of path to storage device.
+
+    parameters:
+        path: string. The directory path to check for validity.
+
+    return:
+        boolean
+"""
 
     if os.path.exists(path):
         print("\nPath valid.\n")
@@ -83,37 +87,35 @@ def check_path_status(path):
         return False
 
 
-
-"""
-Append to data to file.
-The open() function is used with the "a" for append argument.
-If the destination file does not exist python creates it.
-
-parameters:
-    entry: string. An entry with file metadata to append to the indexing file
-    destination: string. the indexing file to append the information to.
-
-return:
-    void
-"""
 def append_to_file(entry, destination):
+    """
+    Append to data to file.
+    The open() function is used with the "a" for append argument.
+    If the destination file does not exist python creates it.
+
+    parameters:
+        entry: string. An entry with file metadata to append to the indexing file
+        destination: string. the indexing file to append the information to.
+
+    return:
+        void
+    """
     myfile = open(destination, 'a')
     myfile.write(entry)
     myfile.close()
 
 
-
-"""
-Walk the device's directory tree and add files matching the criteria to list.
-
-parameters:
-    path_to_device: string. Root path to work from.
-    filetype: string. The file types to list.
-
-return:
-    results: list. The list of all files of specific filetype found.
-"""
 def walk_device(path_to_device, filetype):
+    """
+    Walk the device's directory tree and add files matching the criteria to list.
+
+    parameters:
+        path_to_device: string. Root path to work from.
+        filetype: string. The file types to list.
+
+    return:
+        results: list. The list of all files of specific filetype found.
+    """
     results = []
 
     for root, dirnames, filenames in os.walk(path_to_device):
@@ -127,20 +129,19 @@ def walk_device(path_to_device, filetype):
     return results
 
 
-
-"""
-Read the indexing file line by line and get file and device name data pairs.
-Open indexing file with r-tag for read only access.
-Indexes 1, 3 and 4 represent of the split line are: location of device, file name and type respectively.
-Make tuples (x, y) from the gathered data.
-
-parameters:
-    source: string. the indexing file to read information from.
-
-return:
-    t: list. A list of the entries.
-"""
 def read_indexing_file(source):
+    """
+    Read the indexing file line by line and get file and device name data pairs.
+    Open indexing file with r-tag for read only access.
+    Indexes 1, 3 and 4 represent of the split line are: location of device, file name and type respectively.
+    Make tuples (x, y) from the gathered data.
+
+    parameters:
+        source: string. the indexing file to read information from.
+
+    return:
+        t: list. A list of the entries.
+    """
     t = []
 
     for line in open(source):    # open under default flag -r
@@ -162,6 +163,9 @@ def read_indexing_file(source):
 
 
 """
+    List comprehension way:
+    t = [line.rstrip() for line in open(source)]
+
     line.rstrip
     option.isdigit()
     += augmented assignment

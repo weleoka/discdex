@@ -1,17 +1,23 @@
+"""
+Utility module for Discdex.
+Functions return information data to stdout and take user input for processing.
+"""
+
 from dd_utils import mnt_autodetect
 
-"""
-Display all device names currently existing in indexing file. 
-Prompt for a new device name and then check if user input is unique,
-if not unique prompt y/n for continue. 
 
-parameters:
-    indexing_file: string. The current indexing file.
-
-return:
-    device_name: string. The name of the device to index.
-"""
 def device_name(indexing_file):
+    """
+    Display all device names currently existing in indexing file. 
+    Prompt for a new device name and then check if user input is unique,
+    if not unique prompt y/n for continue. 
+
+    parameters:
+        indexing_file: string. The current indexing file.
+
+    return:
+        device_name: string. The name of the device to index.
+    """
     current_device = ""; device_list = []
 
     for line in open(indexing_file):    # open under default flag -r
@@ -38,17 +44,17 @@ def device_name(indexing_file):
     return device_name
 
 
-"""
-Display select list of all file systems currently mounted.
-Prompt for path to device or one of the select options.
-
-parameters:
-   none.
-
-return:
-    path_to_device: string. The path to the device to index.
-"""
 def device_path():
+    """
+    Display select list of all file systems currently mounted.
+    Prompt for path to device or one of the select options.
+
+    parameters:
+       none.
+
+    return:
+        path_to_device: string. The path to the device to index.
+    """
     mnt_points = mnt_autodetect.get_mount_points()
     i = 0
     print ("\n")
@@ -73,20 +79,20 @@ def device_path():
     return path_to_device
 
 
-"""
-Promt for the sorting method.
-[1] Alphabetical order.
-[2] Alphabetical order grouped by device name.
-Promt for a description to be written to the new list.
-
-parameters:
-   list_file: string. The file which will contain the sorted list.
-
-return:
-    path_to_device: string. The path to the device to index.
-    list_file: string. The file which will contain the sorted list.
-"""
 def sorting_option(list_file = ''):
+    """
+    Promt for the sorting method.
+    [1] Alphabetical order.
+    [2] Alphabetical order grouped by device name.
+    Promt for a description to be written to the new list.
+
+    parameters:
+       list_file: string. The file which will contain the sorted list.
+
+    return:
+        path_to_device: string. The path to the device to index.
+        list_file: string. The file which will contain the sorted list.
+    """
     print("\nChoose a sorting mode for the new list.\n")
     print("[1] Alphabetical order.")
     print("[2] Alphabetical order grouped by device name.")

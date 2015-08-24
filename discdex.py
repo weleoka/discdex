@@ -1,4 +1,18 @@
 #!/usr/bin/env python3
+"""
+A simple tool to create a log of all files and folders on a removable media device such as a CD, BLU-Ray or thumb-drive. This indexer can append a user supplied arbitary name to all files/folders which specifies which removable media entity it can be found on.
+
+Discdex aims to collect metadata on all, or choice, data stored on removable storage devices. The metadata can then be put to use for organising and easily be searched through. Ultimately data can be kept track of more easily with discdex.
+
+The default files scanned for are: avi mpeg mov mp4 wmv
+This can easily be changed in the config part of discdex.py
+
+An entry in the indexing file takes the form:
+
+Path to device - Device name - Path to file - File name - File type - Modified - Size
+
+Please report any issues to weleoka@github.com
+"""
 
 import os, sys
 from time import sleep
@@ -6,18 +20,15 @@ from dd_utils import dd_proc, dd_fs, dd_prompt
 from dd_utils import mnt_autodetect
 
 
-"""
-Config and options
-"""
+
+### Config and options
 FILETYPES = "avi mpeg mpg mov mp4 wmv"  ## File endings to search for
 #FILETYPES = "*"    ## Use wildcard * to index all file endings.
 OUTPUTFILE = "discdex.txt"  ## Default indexing file.
 list_file = "" ## Default human readable list file.
 
 
-"""
-MAIN
-"""
+### Main
 if __name__ == '__main__': # simultaneously coded as importable module and executable script
     option = "refresh_menu" # Make the initial refreshing of the main menu.
     os.system('cls' if os.name == 'nt' else 'clear')
