@@ -22,7 +22,6 @@ return:
     entries: list. All the files with their stats as string.
 """
 def create_indexing_entry(results, current_file_type, path_to_device, device_name):
-
     entries = []
 
     for result in results:
@@ -30,11 +29,11 @@ def create_indexing_entry(results, current_file_type, path_to_device, device_nam
 
         if current_file_type == '*':
             file_type = (re.split('\.', file_base_name))[-1]  # This is so that a file type can be assigned to the current entry.
+        
         else:
             file_type = current_file_type
 
         name = re.split('.' + file_type, file_base_name)[0]
-
         path_and_name_to_file = re.split(path_to_device, result)[1]
 
         try:
@@ -45,6 +44,7 @@ def create_indexing_entry(results, current_file_type, path_to_device, device_nam
             path_to_file = 'ERROR: bad character range'
             print("\n Problem with name of file: %s "
                 % (path_and_name_to_file))
+
             pass
 
         entries.append('\n'
@@ -56,6 +56,7 @@ def create_indexing_entry(results, current_file_type, path_to_device, device_nam
             + str(os.path.getmtime(result)) + '\t'  # Date modified
             + str(os.path.getsize(result))              # Size
             )
+
     return entries
 
 
@@ -87,13 +88,12 @@ def sort_list_of_tuples(data, sorting_option):
         # return sorted(data, key=lambda tup: tup[1])
 
     elif sorting_option == "2" and len(data) > 0:
-        ticker = 0
-        i = 0
-        j = 0
+        ticker = 0; i = 0; j = 0
+
         arr = sorted(data, key=key_by_location)
-        arr2 = []
-        arr3 = []
-        arr4 = []
+
+        arr2 = []; arr3 = []; arr4 = []
+
         current_location = arr[0][0]
 
         for location in arr:
@@ -119,6 +119,7 @@ def sort_list_of_tuples(data, sorting_option):
         return arr4
 
     else:
+
         return None
         
 
@@ -138,11 +139,11 @@ return:
     ticker: integer. A count of all the items listed.
 """
 def stringify_list_of_tuples(data, sorting_option):
-
     ticker = 0  # Keep count of the number of entries.
     entries = []
 
     if sorting_option == "1":
+        
         for item in data:
             ticker = ticker + 1
             entries.append("\n" + item[1] + "\t\t" + item[0])

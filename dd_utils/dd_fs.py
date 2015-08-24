@@ -14,6 +14,7 @@ return:
 def check_file_status(destination, initial_line = ""):
 
     if os.path.isfile(destination):
+
         while True:
             print("\nThe file being written to exists. What do you want to do?")
             print("\n[1] Append.")
@@ -21,10 +22,10 @@ def check_file_status(destination, initial_line = ""):
             print("[9] Return to main menu.")
             option = input("Enter option: ")
 
-            if option == "1":
-                return True
+            if option == "1": return True
 
             elif option == "2":
+
                 while True:
                         y_n = input("Are you sure you want to overwrite the indexing file %s? y/n: "
                             % (destination))
@@ -35,14 +36,17 @@ def check_file_status(destination, initial_line = ""):
                                     myfile = open(destination, 'w')
                                     myfile.write(initial_line)
                                     myfile.close()
+
                                     return True
 
                                 elif y_n == 'n':
                                     option = "9"
+
                                     break
 
             elif option == "9":
                 print("\nReturned to main menu.\n")
+
                 return False
 
     else:
@@ -51,6 +55,7 @@ def check_file_status(destination, initial_line = ""):
         myfile = open(destination, 'w')
         myfile.write(initial_line)
         myfile.close()
+
         return True
 
 
@@ -68,10 +73,13 @@ def check_path_status(path):
 
     if os.path.exists(path):
         print("\nPath valid.\n")
+        
         return True
+
     else:
         print("\nThe path %s appears to not exist. Sorry.\n"
             % (path))
+
         return False
 
 
@@ -89,7 +97,6 @@ return:
     void
 """
 def append_to_file(entry, destination):
-
     myfile = open(destination, 'a')
     myfile.write(entry)
     myfile.close()
@@ -107,10 +114,10 @@ return:
     results: list. The list of all files of specific filetype found.
 """
 def walk_device(path_to_device, filetype):
-
     results = []
 
     for root, dirnames, filenames in os.walk(path_to_device):
+
         for filename in fnmatch.filter(filenames, '*.' + filetype):
             results.append(os.path.join(root, filename))    # /home/bunnybook/python/discdex/FOLDERPHAT/ccc.mp4
 
@@ -124,6 +131,8 @@ def walk_device(path_to_device, filetype):
 """
 Read the indexing file line by line and get file and device name data pairs.
 Open indexing file with r-tag for read only access.
+Indexes 1, 3 and 4 represent of the split line are: location of device, file name and type respectively.
+Make tuples (x, y) from the gathered data.
 
 parameters:
     source: string. the indexing file to read information from.
@@ -132,26 +141,33 @@ return:
     t: list. A list of the entries.
 """
 def read_indexing_file(source):
-
     t = []
-    f = open(source, 'r')
-    line = f.readline()
 
-    while line:
-        if not line in ['\n', '\r\n']: # Ignore blank lines
-
+    for line in open(source):    # open under default flag -r
+        
+        if not line in ['\n', '\r\n']:
             arr = re.split('\t', line)
 
-            # 1, 3 and 4 represent the list index locations of device, and file name  and type respectively.
             try:
-                t.append((arr[1], arr[3] + "." + arr[4]))   #Making tuples from the gathered data.
+                t.append((arr[1], arr[3] + "." + arr[4]))   
+
             except:
                 print("Came across faulty entry: %s"
                     % (arr))
+
                 pass
 
-        line = f.readline()
-
-    f.close()
-
     return t
+
+
+
+"""
+    line.rstrip
+    option.isdigit()
+    += augmented assignment
+    use ; for one liners
+    Y = X IF Z else W
+    else in try while for loops
+
+    for line in open(fff.txt)
+"""

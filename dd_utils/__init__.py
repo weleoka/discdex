@@ -1,1 +1,1 @@
-__all__ = ['dd_proc', 'dd_fs', 'mnt_autodetect']
+__all__ = ['dd_proc', 'dd_fs', 'dd_prompt', 'mnt_autodetect']
