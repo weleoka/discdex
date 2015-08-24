@@ -4,9 +4,9 @@ Changelog
 Changelog Discdex.
 
 
-Version 0.0.10
+Version 0.1.0
 -------------
-*Release 2015-08-23*
+*Release 2015-08-24*
 - Lists mounted file systems and generates a select list for indexing.
 - Checks for devices allready in index against user input to prevent doubles.
 
