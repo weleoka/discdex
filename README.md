@@ -120,11 +120,12 @@ Please report an issue if one is found.
 
 Functionality:
 
+* It's called file suffix, not file ending. Change required throughout Discdex.
 * Extract metadata from multimedia files. Needs to import module like Hachoir which can read metadata of various files. Interesting data could be:
 	- Duration
 	- Encoding/codec
 	- Bitrate
-* Print indexing file to terminal window option.
+* Format printing of index to terminal.
 * If no data is written to the sorted list file because the indexing file is empty then it should be deleted.
 
 Specs and options:
