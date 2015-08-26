@@ -41,7 +41,8 @@ def device_name(indexing_file):
 
                     elif y_n == 'n': continue
 
-    return device_name
+        elif device_name != "":
+            return device_name
 
 
 def device_path():
@@ -69,11 +70,12 @@ def device_path():
     try:
         dev = int(path_to_device)
 
-    except:
+    except ValueError as e:
+        print ("The argument does not contain numbers\n%s" % (e))
         dev = False
         
     if dev and dev <= len(mnt_points):
-            path_to_device = mnt_points[dev - 1]
+            path_to_device = mnt_points[dev - 1
             path_to_device = path_to_device[1].decode()
 
     return path_to_device

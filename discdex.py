@@ -98,10 +98,10 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
                     os.system('cls' if os.name == 'nt' else 'clear')
 
                 else:
-                    os.system('cls' if os.name == 'nt' else 'clear')
                     print("\nNon-valid path <%s>. Returning to main menu...\n"
                         % (path_to_device))
                     sleep(2)
+                    os.system('cls' if os.name == 'nt' else 'clear')
 
 
     # Sort the indexing file and make a human readable list of all entries.

@@ -38,19 +38,11 @@ def create_indexing_entry(results, current_file_type, path_to_device, device_nam
         else:
             file_type = current_file_type
 
-        name = re.split('.' + file_type, file_base_name)[0]
-        path_and_name_to_file = re.split(path_to_device, result)[1]
+        name = re.split('.' + file_type, file_base_name)[0] # Get file name without suffix.
+        # path_and_name_to_file = re.split(path_to_device, result)[1]   # Not used in later versions of Discdex.
 
-        try:
-            path_to_file = re.split(path_to_device, os.path.dirname(result))[-1] # re.split(name, path_and_name_to_file)[0]
-            path_to_file = path_to_file + "/"
-
-        except:
-            path_to_file = 'ERROR: bad character range'
-            print("\n Problem with name of file: %s "
-                % (path_and_name_to_file))
-
-            pass
+        path_to_file = re.split(path_to_device, os.path.dirname(result))[-1]    # Get the relative path to file from device root.
+        path_to_file += "/"
 
         entries.append('\n'
             + path_to_device + '\t'                        # System path to device
