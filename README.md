@@ -45,46 +45,6 @@ Pre-launch: make sure the filetypes you want to index are specified in the confi
 3. Let the work be done by discdex!
 
 
-#### SQL and using the .csv file exported by Discdex
-An example of the SQL query to create the table in a MySQL database is as follows:
-
-```SQL
-USE dbteknik;
-
-CREATE  TABLE IF NOT EXISTS `mydb`.`Discdex`
-(
-    `id` INT NOT NULL AUTO_INCREMENT ,
-    `path_to_device` VARCHAR(255) NULL ,
-    `device_name` VARCHAR(255) NULL ,
-    `path_to_file` VARCHAR(255) NULL ,
-    `file_name` VARCHAR(255) NULL ,
-    `file_type` VARCHAR(255) NULL ,
-    `modified` BIGINT NULL ,
-    `size` BIGINT NULL ,
-    PRIMARY KEY (`id`)
-)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-```
-
-Then load the data into the table from the .csv file which Discdex generated.
-
-```SQL
-LOAD DATA INFILE '/path/to/your/csv/file/model.csv'
-INTO TABLE mydb.Discdex
-FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
- (
-    `path_to_device`,
-    `device_name`,
-    `path_to_file`,
-    `file_name`,
-    `file_type`,
-    `modified`,
-    `size`
-);
-```
-
 ### Current Features:
 General functinality:
 
@@ -159,6 +119,48 @@ The best way to get your changes merged is as follows:
 4. Do not change the version number, I will do that on my end
 5. Push the repo up to GitHub
 6. Send a pull request to [weleoka/discdex](https://github.com/weleoka/discdex)
+
+
+
+#### SQL and using the .csv file exported by Discdex
+An example of the SQL query to create the table in a MySQL database is as follows:
+
+```SQL
+USE dbteknik;
+
+CREATE  TABLE IF NOT EXISTS `mydb`.`Discdex`
+(
+    `id` INT NOT NULL AUTO_INCREMENT ,
+    `path_to_device` VARCHAR(255) NULL ,
+    `device_name` VARCHAR(255) NULL ,
+    `path_to_file` VARCHAR(255) NULL ,
+    `file_name` VARCHAR(255) NULL ,
+    `file_type` VARCHAR(255) NULL ,
+    `modified` BIGINT NULL ,
+    `size` BIGINT NULL ,
+    PRIMARY KEY (`id`)
+)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+```
+
+Then load the data into the table from the .csv file which Discdex generated.
+
+```SQL
+LOAD DATA INFILE '/path/to/your/csv/file/model.csv'
+INTO TABLE mydb.Discdex
+FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\n'
+ (
+    `path_to_device`,
+    `device_name`,
+    `path_to_file`,
+    `file_name`,
+    `file_type`,
+    `modified`,
+    `size`
+);
+```
 
 
 
