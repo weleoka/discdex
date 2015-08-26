@@ -134,9 +134,12 @@ Specs and options:
 * When using wildcard "*" to index all file endings the filecount for each respective ending come across is not reported to user. One solution is a key-value pair ticker counter in the "walk_device" function.
 
 Security:
+
 * Encrypted indexing file.
 
-Code, style and performance: none
+Code, style and performance:
+
+* Exceptions in a try-catch should be named so as not to prevent bubbling up and informing of un-planned for errors.
 
 
 
