@@ -75,13 +75,13 @@ def device_path():
         dev = False
         
     if dev and dev <= len(mnt_points):
-            path_to_device = mnt_points[dev - 1
+            path_to_device = mnt_points[dev - 1]
             path_to_device = path_to_device[1].decode()
 
     return path_to_device
 
 
-def sorting_option(list_file = ''):
+def sorting_option():
     """
     Promt for the sorting method.
     [1] Alphabetical order.
@@ -89,8 +89,7 @@ def sorting_option(list_file = ''):
     Promt for a description to be written to the new list.
 
     parameters:
-       list_file: string. The file which will contain the sorted list.
-
+       
     return:
         path_to_device: string. The path to the device to index.
         list_file: string. The file which will contain the sorted list.
@@ -106,11 +105,11 @@ def sorting_option(list_file = ''):
         if sorting_option in ['1', '2']:
 
             while True:
-                list_file = list_file or input('\nGive the new list file a file name: ')    # Use specified or query for new.
+                list_file = input('\nGive the new list file a file name: ')    # Use specified or query for new.
                 
-                if list_file != '': break
+                description = input('\nGive the new list a description (or leave blank): \n')
 
-            description = input('\nGive the new list a description (or leave blank): \n')
+                if list_file != '': break
 
             return sorting_option, list_file, description
 

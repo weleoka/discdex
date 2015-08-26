@@ -6,7 +6,7 @@ Module handling the processes for sorting and creating indexing entries.
 import re, sys, os
 
 
-def create_indexing_entry(results, current_file_type, path_to_device, device_name):
+def create_indexing_entry(results, current_suffix, path_to_device, device_name):
     """
     Create indexing entry/string of file metadata and append to list.
     Data should include:
@@ -20,7 +20,7 @@ def create_indexing_entry(results, current_file_type, path_to_device, device_nam
 
     parameters:
         results: list. All the files found with relevant metadata.
-        current_file_type: string. The current filetype being listed.
+        current_suffix: string. The current filetype being listed.
         path_to_device: string. The path to the currently indexed storage device.
         device_name: string. The user supplied name for the device.
 
@@ -32,34 +32,34 @@ def create_indexing_entry(results, current_file_type, path_to_device, device_nam
     for result in results:
         file_base_name = os.path.basename(result)
 
-        if current_file_type == '*':
-            file_type = (re.split('\.', file_base_name))[-1]  # This is so that a file type can be assigned to the current entry.
+        if current_suffix == '*':
+            suffix = (re.split('\.', file_base_name))[-1]
         
         else:
-            file_type = current_file_type
+            suffix = current_suffix
 
-        name = re.split('.' + file_type, file_base_name)[0] # Get file name without suffix.
+        name = re.split('.' + suffix, file_base_name)[0] # Get file name without suffix.
         # path_and_name_to_file = re.split(path_to_device, result)[1]   # Not used in later versions of Discdex.
 
         path_to_file = re.split(path_to_device, os.path.dirname(result))[-1]    # Get the relative path to file from device root.
         path_to_file += "/"
 
         entries.append('\n'
-            + path_to_device + '\t'                        # System path to device
+            + path_to_device + '\t'                     # System path to device
             + device_name  + '\t'                       # Device name
-            + path_to_file + '\t'                           # Path to file
-            + name + '\t'                                   # Name of file
-            + file_type + '\t'                                  # File type
-            + str(os.path.getmtime(result)) + '\t'  # Date modified
+            + path_to_file + '\t'                       # Path to file
+            + name + '\t'                               # Name of file
+            + suffix + '\t'                             # File type
+            + str(os.path.getmtime(result)) + '\t'      # Date modified
             + str(os.path.getsize(result))              # Size
             )
 
     return entries
 
 
-def sort_list_of_tuples(data, sorting_option):
+def sort_list_of_tuples(data, sort_mode):
     """
-    Take the file name and device name from index file entries and sort them according to sorting_option.
+    Take the file name and device name from index file entries and sort them according to sort_mode.
     [1] Alphabetical order.
     [2] Alphabetical order grouped by device name.
     http://www.pythoncentral.io/how-to-sort-python-dictionaries-by-key-or-value/
@@ -67,7 +67,7 @@ def sort_list_of_tuples(data, sorting_option):
 
     parameters:
         data: list. A list to be sorted.
-        sorting_option: integer. The method of sorting.
+        sort_mode: integer. The method of sorting.
 
     return:
         sorted_list: list. A list of the sorted entries.
@@ -79,32 +79,32 @@ def sort_list_of_tuples(data, sorting_option):
     def key_by_location(item):
         return item[0]  # Sort by location
 
-    if sorting_option == "1":
+    if sort_mode == "1":
         return sorted(data, key=key_by_name)
         # return sorted(data, key=lambda tup: tup[1])
 
-    elif sorting_option == "2" and len(data) > 0:
+    elif sort_mode == "2" and len(data) > 0:
         ticker = 0; i = 0; j = 0
         arr = sorted(data, key=key_by_location)
         arr2 = []; arr3 = []; arr4 = []
-        current_location = arr[0][0]
+        tmp_dev = arr[0][0]
 
-        for location in arr:
+        for dev in arr:
             i += 1
             ticker += 1
 
-            if current_location != location[0]:
+            if tmp_dev != dev[0]:
                 print("Drive %s has %s entries."
-                    % (current_location, ticker))
+                    % (tmp_dev, ticker))
                 ticker = 0
-                current_location = location[0]
+                tmp_dev = dev[0]
                 arr2 = arr[j:i - 1]
                 arr3 = sorted(arr2, key=key_by_name)
                 arr4 += arr3
                 j = i
 
-        print("Drive %s has %s entries."
-            % (current_location, ticker))
+        print("Device %s has %s entries."
+            % (tmp_dev, ticker))
         arr2 = arr[j:]
         arr3 = sorted(arr2, key=key_by_name)
         arr4 += arr3
@@ -116,7 +116,7 @@ def sort_list_of_tuples(data, sorting_option):
         return None
         
 
-def stringify_list_of_tuples(data, sorting_option):
+def stringify_list_of_tuples(data, sort_mode):
     """
     Make strings from tuple pairs according to sorting order.
     [1] Alphabetical order.
@@ -124,7 +124,7 @@ def stringify_list_of_tuples(data, sorting_option):
 
     parameters:
         data: list. A list of tuples to be stringified.
-        sorting_option: integer. The method of sorting.
+        sort_mode: integer. The method of sorting.
 
     return:
         entries: list. A list of the stringified entries.
@@ -133,23 +133,23 @@ def stringify_list_of_tuples(data, sorting_option):
     ticker = 0  # Keep count of the number of entries.
     entries = []
 
-    if sorting_option == "1":
+    if sort_mode == "1":
 
         for item in data:
             ticker += 1
             entries.append("\n" + item[1] + "\t\t" + item[0])
 
-    elif sorting_option == "2":
-        current_location = data[0][0]
-        entries.append("\n\n\n" + current_location + "\n- - - - - - -")
+    elif sort_mode == "2":
+        tmp_dev = data[0][0]
+        entries.append("\n\n\n" + tmp_dev + "\n- - - - - - -")
 
-        for location in data:
+        for dev in data:
             ticker += 1
 
-            if current_location != location[0]:
-                entries.append("\n\n\n" + location[0] + "\n- - - - - - -")
-                current_location = location[0]
+            if tmp_dev != dev[0]:
+                entries.append("\n\n\n" + dev[0] + "\n- - - - - - -")
+                tmp_dev = dev[0]
 
-            entries.append("\n" + location[1])
+            entries.append("\n" + dev[1])
 
     return entries, ticker

@@ -108,7 +108,7 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
         elif option == "2":
             option = "refresh_menu" # Reset the option.
 
-            sorting_option, list_file, description = dd_prompt.sorting_option(list_file)
+            sorting_option, list_file, description = dd_prompt.sorting_option()
 
             if (sorting_option and list_file and description) is not None:
                 dd_fs.check_file_status(list_file, "\tMade using www.github.com/weleoka/discdex\n" + description + "\n")
@@ -130,7 +130,8 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
 
                 else:
                     print("The index seems to be empty.")
-                    # delete the new list file.
+                    
+                    pass # here delete the new list file.
 
             else:
                 print("\nReturned to main menu.\n")
