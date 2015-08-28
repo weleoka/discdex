@@ -6,8 +6,10 @@ Changelog Discdex.
 
 Version 0.1.1
 -------------
-*Release 2015-08---*
+*Release 2015-08-26*
 - docstrings for PyDocs for all functions and modules.
+- Code clarity control.
+- User friendly prompts and menu's.
 
 
 Version 0.1.0

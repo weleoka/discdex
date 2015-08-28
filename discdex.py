@@ -16,9 +16,7 @@ Please report any issues to weleoka@github.com
 
 import os, sys
 from time import sleep
-from dd_utils import dd_proc, dd_fs, dd_prompt
-from dd_utils import mnt_autodetect
-
+from dd_utils import dd_proc, dd_fs, dd_prompt, mnt_autodetect
 
 
 ### Config and options
