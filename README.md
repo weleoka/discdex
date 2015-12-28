@@ -38,7 +38,7 @@ Path to device - Device name - Path to file - File name - File type - Modified -
 
 
 ### Usage
-Pre-launch: make sure the filetypes you want to index are specified in the config-part of discdex.py, youse wildcard * to index all files.
+Pre-launch: make sure the filetypes you want to index are specified in the config-part of discdex.py, use wildcard * to index all files.
 
 1. Go to the home folder of discdex in a terminal and run as shell script "./discdex.py".
 2. Follow menu instructions.
@@ -87,11 +87,12 @@ Functionality:
 	- Bitrate
 * Format printing of index to terminal.
 * If no data is written to the sorted list file because the indexing file is empty then it should be deleted.
+* Description and genre columns in data.
 
 Specs and options:
 
 * A choice of the file metadata to include in the indexing system.
-* When using wildcard "*" to index all file endings the filecount for each respective ending come across is not reported to user. One solution is a key-value pair ticker counter in the "walk_device" function.
+* When using wildcard "*" to index all file endings the filecount for each respective ending is not reported to user. One solution is a key-value pair ticker counter in the "walk_device" function.
 
 Security:
 
