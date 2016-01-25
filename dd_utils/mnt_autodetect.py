@@ -14,11 +14,12 @@ from subprocess import check_output, CalledProcessError
 
 def get_usb_devices():
     """
-    Description
+    Check for USB mounted file systems.
 
     parameters:
        
     return:
+        string. Path to USB file system.
         
     """
     sdb_devices = map(os.path.realpath, glob('/sys/block/sd*'))
@@ -33,16 +34,16 @@ def get_usb_devices():
 
 def get_mounted_filesystems():
     """
-    Description
+    Check for mounted fie systems and return path to device.
 
     parameters:
        
     return:
+        String. Path to mounted file system.
         
     """
     sdb_devices = map(os.path.realpath, glob('/sys/block/s*'))
-    rem_devices = (dev for dev in sdb_devices
-        if 'usb' or 'sr0' in dev.split('/')[5])
+    rem_devices = (dev for dev in sdb_devices if 'usb' or 'sr0' in dev.split('/')[5])
     #for dev in sdb_devices:
       #  print ("aa: %s, bb: %s"
         #    % (os.path.basename(dev), dev))

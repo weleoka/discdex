@@ -3,7 +3,7 @@ Indexing of files for CD/DVD/HDD or other.
 
 
 ### Discdex versions
-v0.1.1 (current)
+v0.1.2 (current)
 
 (Note to author: version specified in readme.md, changelog.md, and git.)
 
@@ -11,8 +11,6 @@ v0.1.1 (current)
 
 ### Requirements
 Python 3.4
-
-A NIX based system ( This is due to the fact that MS-Windows path using backslash needs to be escaped in the code to work).
 
 
 
@@ -26,7 +24,7 @@ This can easily be changed in the config part of discdex.py
 
 An entry in the indexing file takes the form:
 
-Path to device - Device name - Path to file - File name - File type - Modified - Size
+Path to device - Device name - Path to file - File name - File suffix - Modified - Size
 
 
 
@@ -38,7 +36,7 @@ Path to device - Device name - Path to file - File name - File type - Modified -
 
 
 ### Usage
-Pre-launch: make sure the filetypes you want to index are specified in the config-part of discdex.py, youse wildcard * to index all files.
+Pre-launch: make sure the filetypes you want to index are specified in the config-part of discdex.py, use wildcard * to index all files.
 
 1. Go to the home folder of discdex in a terminal and run as shell script "./discdex.py".
 2. Follow menu instructions.
@@ -49,16 +47,16 @@ Pre-launch: make sure the filetypes you want to index are specified in the confi
 General functinality:
 
 * Walk a directory (recursive) and its subdirectories and record file metadata.
-* Looks for mounted file systems and gives as a list to choose from.
+* Looks for mounted file systems and gives a list to choose from.
 * Checks if path is valid before scanning.
 * Checks to see if the indexing file exists - then creates it or appends to it.
-* Filter files on file type or wildcard(*) search - indexing of all file types.
+* Filter files on specified file suffixes or wildcard(*).
 * Save information on
     - Path to device (supplied by user at prompt)
     - Location device name (supplied by user at prompt)
     - Path to file
     - Name of file
-    - File type
+    - File suffix
     - Date modified
     - Size
 
@@ -70,7 +68,7 @@ General functinality:
 
 Specs and options:
 
-* Easy file type filter parameters in config.
+* Easy file suffix filter parameters in config.
 
 
 
@@ -80,7 +78,6 @@ Please report an issue if one is found.
 
 Functionality:
 
-* It's called file suffix, not file ending. Change required throughout Discdex.
 * Extract metadata from multimedia files. Needs to import module like Hachoir which can read metadata of various files. Interesting data could be:
 	- Duration
 	- Encoding/codec
@@ -91,7 +88,7 @@ Functionality:
 Specs and options:
 
 * A choice of the file metadata to include in the indexing system.
-* When using wildcard "*" to index all file endings the filecount for each respective ending come across is not reported to user. One solution is a key-value pair ticker counter in the "walk_device" function.
+* When using wildcard "*" to index files of all suffixes the filecount for each respective ending come across is not reported to user. One solution is a key-value pair ticker counter in the "walk_device" function.
 
 Security:
 
@@ -170,7 +167,7 @@ GNU GENERAL PUBLIC LICENSE
 
 LICENCE.md for details.
 
-Copyright (c) 2015 A.K. Weeks
+Copyright (c) 2016 A.K. Weeks
 
 
 

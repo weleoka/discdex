@@ -105,26 +105,26 @@ def append_to_file(entry, destination):
     myfile.close()
 
 
-def walk_device(path_to_device, filetype):
+def walk_device(path_to_device, filesuffix):
     """
     Walk the device's directory tree and add files matching the criteria to list.
 
     parameters:
         path_to_device: string. Root path to work from.
-        filetype: string. The file types to list.
+        filesuffix: string. The file suffixes to list.
 
     return:
-        results: list. The list of all files of specific filetype found.
+        results: list. The list of all files of specific filesuffix found.
     """
     results = []
 
     for root, dirnames, filenames in os.walk(path_to_device):
 
-        for filename in fnmatch.filter(filenames, '*.' + filetype):
-            results.append(os.path.join(root, filename))    # /home/bunnybook/python/discdex/FOLDERPHAT/ccc.mp4
+        for filename in fnmatch.filter(filenames, '*.' + filesuffix):
+            results.append(os.path.join(root, filename))    
 
     print("Found %s files with ending: %s"
-        % (len(results), filetype))
+        % (len(results), filesuffix))
 
     return results
 
@@ -152,7 +152,7 @@ def read_indexing_file(source):
             try:
                 t.append((arr[1], arr[3] + "." + arr[4]))   
 
-            except:
+            except IndexError:
                 print("Came across faulty entry: %s"
                     % (arr))
 

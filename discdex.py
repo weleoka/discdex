@@ -9,7 +9,7 @@ This can easily be changed in the config part of discdex.py
 
 An entry in the indexing file takes the form:
 
-Path to device - Device name - Path to file - File name - File type - Modified - Size
+Path to device - Device name - Path to file - File name - File suffix - Modified - Size
 
 Please report any issues to weleoka@github.com
 """
@@ -20,8 +20,8 @@ from dd_utils import dd_proc, dd_fs, dd_prompt, mnt_autodetect
 
 
 ### Config and options
-FILETYPES = "avi mpeg mpg mov mp4 wmv"  ## File endings to search for
-#FILETYPES = "*"    ## Use wildcard * to index all file endings.
+FILESUFFIXES = "avi mpeg mpg mov mp4 wmv"  ## File suffixes to search for.
+#FILESUFFIXES = "*"    ## Use wildcard * to index files with all suffixes.
 OUTPUTFILE = "discdex.txt"  ## Default indexing file.
 list_file = "" ## Default human readable list file.
 
@@ -80,11 +80,11 @@ if __name__ == '__main__': # simultaneously coded as importable module and execu
 
                 if dd_fs.check_path_status(path_to_device):
                     print ("\nIndexing... please wait.")
-                    ticker = 0  # Keep count of the total files found matching the filetype criteria.
+                    ticker = 0  # Keep count of the total files found matching the filesuffix criteria.
 
-                    for filetype in FILETYPES.split(" "):
-                        results = dd_fs.walk_device(path_to_device, filetype)
-                        entries = dd_proc.create_indexing_entry(results, filetype, path_to_device, device_name)
+                    for filesuffix in FILESUFFIXES.split(" "):
+                        results = dd_fs.walk_device(path_to_device, filesuffix)
+                        entries = dd_proc.create_indexing_entry(results, filesuffix, path_to_device, device_name)
                         ticker += len(entries)
 
                         for entry in entries:

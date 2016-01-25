@@ -4,6 +4,13 @@ Changelog
 Changelog Discdex.
 
 
+Version 0.1.2
+-------------
+*Release 2016-01-25*
+- Error handling improved.
+- Code documentation
+
+
 Version 0.1.1
 -------------
 *Release 2015-08-26*

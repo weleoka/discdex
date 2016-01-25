@@ -93,6 +93,7 @@ def sorting_option():
     return:
         path_to_device: string. The path to the device to index.
         list_file: string. The file which will contain the sorted list.
+        description: string. A description for the sorted list.
     """
     print("\nChoose a sorting mode for the new list.\n")
     print("[1] Alphabetical order.")
