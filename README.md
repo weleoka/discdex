@@ -84,11 +84,16 @@ Functionality:
 	- Bitrate
 * Format printing of index to terminal.
 * If no data is written to the sorted list file because the indexing file is empty then it should be deleted.
+* Description and genre columns in data.
 
 Specs and options:
 
 * A choice of the file metadata to include in the indexing system.
+<<<<<<< HEAD
 * When using wildcard "*" to index files of all suffixes the filecount for each respective ending come across is not reported to user. One solution is a key-value pair ticker counter in the "walk_device" function.
+=======
+* When using wildcard "*" to index all file endings the filecount for each respective ending is not reported to user. One solution is a key-value pair ticker counter in the "walk_device" function.
+>>>>>>> origin/dev
 
 Security:
 
