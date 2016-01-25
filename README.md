@@ -89,11 +89,7 @@ Functionality:
 Specs and options:
 
 * A choice of the file metadata to include in the indexing system.
-<<<<<<< HEAD
 * When using wildcard "*" to index files of all suffixes the filecount for each respective ending come across is not reported to user. One solution is a key-value pair ticker counter in the "walk_device" function.
-=======
-* When using wildcard "*" to index all file endings the filecount for each respective ending is not reported to user. One solution is a key-value pair ticker counter in the "walk_device" function.
->>>>>>> origin/dev
 
 Security:
 
@@ -137,7 +133,7 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`Discdex`
     `device_name` VARCHAR(255) NULL ,
     `path_to_file` VARCHAR(255) NULL ,
     `file_name` VARCHAR(255) NULL ,
-    `file_type` VARCHAR(255) NULL ,
+    `file_suffix` VARCHAR(255) NULL ,
     `modified` BIGINT NULL ,
     `size` BIGINT NULL ,
     PRIMARY KEY (`id`)
@@ -158,7 +154,7 @@ LINES TERMINATED BY '\n'
     `device_name`,
     `path_to_file`,
     `file_name`,
-    `file_type`,
+    `file_suffix`,
     `modified`,
     `size`
 );

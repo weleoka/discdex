@@ -6,11 +6,7 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`Discdex` (
   `device_name` VARCHAR(255) NULL ,
   `path_to_file` VARCHAR(255) NULL ,
   `file_name` VARCHAR(255) NULL ,
-<<<<<<< HEAD
   `file_suffix` VARCHAR(255) NULL ,
-=======
-  `file_type` VARCHAR(255) NULL ,
->>>>>>> origin/dev
   `modified` BIGINT NULL ,
   `size` BIGINT NULL ,
   PRIMARY KEY (`id`) )
@@ -31,11 +27,7 @@ LINES TERMINATED BY '\n'
 `device_name`,
 `path_to_file`,
 `file_name`,
-<<<<<<< HEAD
 `file_suffix`,
-=======
-`file_type`,
->>>>>>> origin/dev
 `modified`, -- @var1
 `size`);
 -- SET modified = STR_TO_DATE(@var1,'%m/%d/%Y %k:%i');
